@@ -82,6 +82,7 @@ export default function ApplicationForm({
     if (application) {
       reset({
         ...application,
+        url: application.url || '',
         dateApplied: new Date(application.dateApplied),
       });
     } else {
