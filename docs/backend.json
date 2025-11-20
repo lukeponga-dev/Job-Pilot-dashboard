@@ -38,6 +38,15 @@
         "region": {
           "type": "string",
           "description": "The geographical region where the job is located."
+        },
+        "url": {
+          "type": "string",
+          "description": "The URL for the job posting.",
+          "format": "uri"
+        },
+        "location": {
+          "type": "string",
+          "description": "The location of the job."
         }
       },
       "required": [
