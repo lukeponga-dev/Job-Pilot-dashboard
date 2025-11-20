@@ -5,7 +5,7 @@ import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Papa from 'papaparse';
 import { format } from 'date-fns';
-import { collection, writeBatch, serverTimestamp } from 'firebase/firestore';
+import { collection, writeBatch, serverTimestamp, doc } from 'firebase/firestore';
 import React from 'react';
 
 import {
@@ -111,11 +111,10 @@ export default function Header({ applications }: HeaderProps) {
     }
 
     try {
-      const jobAppsCollection = collection(firestore, 'users', user.uid, 'jobApplications');
       const batch = writeBatch(firestore);
 
       seedApplications.forEach((app) => {
-        const docRef = collection(firestore, 'users', user.uid, 'jobApplications').doc();
+        const docRef = doc(collection(firestore, 'users', user.uid, 'jobApplications'));
         const fullData = {
           ...app,
           id: docRef.id,
