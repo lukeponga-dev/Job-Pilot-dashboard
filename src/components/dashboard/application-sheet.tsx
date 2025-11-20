@@ -70,6 +70,13 @@ export default function ApplicationForm({
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      company: '',
+      role: '',
+      url: '',
+      status: 'Applied',
+      dateApplied: new Date(),
+    },
   });
 
   const {
