@@ -1,7 +1,6 @@
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase-admin/app';
 import { getAuth, Auth } from 'firebase-admin/auth';
 import { getFirestore, Firestore } from 'firebase-admin/firestore';
-import { firebaseConfig } from './config';
 
 interface FirebaseAdminServices {
   app: FirebaseApp;
@@ -19,10 +18,8 @@ export function getFirebaseAdmin(): FirebaseAdminServices {
     };
   }
 
-  const app = initializeApp({
-    credential: undefined, // Let auto-discovery handle credentials
-    projectId: firebaseConfig.projectId,
-  });
+  // Initialize without arguments to allow for auto-discovery of credentials
+  const app = initializeApp();
 
   return {
     app,
