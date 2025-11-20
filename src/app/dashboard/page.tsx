@@ -28,7 +28,7 @@ export default function DashboardPage() {
   const [statusFilter, setStatusFilter] = useState<JobStatus | 'all'>('all');
 
   const jobsQuery = useMemoFirebase(() => {
-    if (!user) return null;
+    if (!user || !firestore) return null;
     return query(
       collection(firestore, 'users', user.uid, 'jobApplications'),
       orderBy('lastUpdated', 'desc')
@@ -36,7 +36,7 @@ export default function DashboardPage() {
   }, [firestore, user]);
 
   const remindersQuery = useMemoFirebase(() => {
-    if (!user) return null;
+    if (!user || !firestore) return null;
     return query(
         collection(firestore, 'users', user.uid, 'reminders'),
         orderBy('date', 'asc')

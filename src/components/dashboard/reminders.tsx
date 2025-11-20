@@ -65,7 +65,7 @@ export default function Reminders({ reminders, applications }: RemindersProps) {
   });
 
   async function onSubmit(values: z.infer<typeof reminderSchema>) {
-    if (!user) return;
+    if (!user || !firestore) return;
     const selectedJob = applications.find(app => app.id === values.jobId);
     if (!selectedJob) return;
 
@@ -88,7 +88,7 @@ export default function Reminders({ reminders, applications }: RemindersProps) {
   }
 
   async function deleteReminder(id: string) {
-    if(!user) return;
+    if(!user || !firestore) return;
     try {
       const reminderDoc = doc(firestore, 'users', user.uid, 'reminders', id);
       deleteDocumentNonBlocking(reminderDoc);
