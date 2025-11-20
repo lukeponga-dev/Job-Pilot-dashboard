@@ -1,0 +1,94 @@
+{
+  "entities": {
+    "jobApplication": {
+      "title": "Job Application",
+      "description": "Represents a user's job application.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The ID of the user who owns this application."
+        },
+        "company": {
+          "type": "string",
+          "description": "The name of the company."
+        },
+        "role": {
+          "type": "string",
+          "description": "The job role or title."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL of the job posting."
+        },
+        "status": {
+          "type": "string",
+          "description": "The current status of the application.",
+          "enum": ["Applied", "Interviewing", "Offer", "Rejected"]
+        },
+        "dateApplied": {
+          "type": "string",
+          "format": "date",
+          "description": "The date the application was submitted."
+        },
+        "lastUpdated": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of the last update."
+        }
+      },
+      "required": ["userId", "company", "role", "status", "dateApplied", "lastUpdated"]
+    },
+    "reminder": {
+        "title": "Reminder",
+        "description": "Represents a reminder for a job application.",
+        "type": "object",
+        "properties": {
+            "userId": {
+                "type": "string",
+                "description": "The ID of the user who owns this reminder."
+            },
+            "jobId": {
+                "type": "string",
+                "description": "The ID of the associated job application."
+            },
+            "jobCompany": {
+                "type": "string",
+                "description": "The company name for the associated job."
+            },
+            "jobRole": {
+                "type": "string",
+                "description": "The role for the associated job."
+            },
+            "title": {
+                "type": "string",
+                "description": "The title of the reminder."
+            },
+            "date": {
+                "type": "string",
+                "format": "date",
+                "description": "The date of the reminder."
+            }
+        },
+        "required": ["userId", "jobId", "title", "date"]
+    }
+  },
+  "auth": {
+    "providers": ["Google", "Email/Password"]
+  },
+  "firestore": {
+    "/jobApplications/{docId}": {
+      "schema": {
+        "$ref": "#/entities/jobApplication"
+      },
+      "description": "Collection of all job applications."
+    },
+    "/reminders/{docId}": {
+        "schema": {
+          "$ref": "#/entities/reminder"
+        },
+        "description": "Collection of all reminders."
+      }
+  }
+}
