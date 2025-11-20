@@ -4,7 +4,6 @@ import { useState, useMemo } from 'react';
 import { collection, query, orderBy } from 'firebase/firestore';
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
 import type { JobApplication, JobStatus } from '@/lib/types';
-import { seedApplications } from '@/lib/seed-data';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
@@ -30,19 +29,14 @@ export default function DashboardPage() {
   const [selectedApplication, setSelectedApplication] = useState<JobApplication | null>(null);
   const [statusFilter, setStatusFilter] = useState<JobStatus | 'all'>('all');
 
-  // For now, we will use the seed data. In a real app, you'd fetch from Firestore.
-  const applications = seedApplications;
-  const isLoadingApplications = false;
-
-  // You can switch back to Firestore by uncommenting the code below and removing the seed data.
-  // const jobsQuery = useMemoFirebase(() => {
-  //   if (!user || !firestore) return null;
-  //   return query(
-  //     collection(firestore, 'users', user.uid, 'jobApplications'),
-  //     orderBy('lastUpdated', 'desc')
-  //   );
-  // }, [firestore, user]);
-  // const { data: applications, isLoading: isLoadingApplications } = useCollection<JobApplication>(jobsQuery);
+  const jobsQuery = useMemoFirebase(() => {
+    if (!user || !firestore) return null;
+    return query(
+      collection(firestore, 'users', user.uid, 'jobApplications'),
+      orderBy('lastUpdated', 'desc')
+    );
+  }, [firestore, user]);
+  const { data: applications, isLoading: isLoadingApplications } = useCollection<JobApplication>(jobsQuery);
   
   const remindersQuery = useMemoFirebase(() => {
     if (!user || !firestore) return null;

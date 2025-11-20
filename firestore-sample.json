@@ -1,0 +1,133 @@
+
+{
+  "users": {
+    "user_12345": {
+      "__collections__": {
+        "jobApplications": {
+          "jobApp_98765": {
+            "id": "jobApp_98765",
+            "userId": "user_12345",
+            "company": "TechNova Ltd",
+            "role": "Frontend Developer",
+            "status": "Interviewing",
+            "applicationDate": "2025-11-10T09:30:00Z",
+            "notes": "First interview scheduled for next week.",
+            "region": "Waikato, NZ"
+          },
+          "jobApp_54321": {
+            "id": "jobApp_54321",
+            "userId": "user_12345",
+            "company": "CloudWorks",
+            "role": "DevOps Engineer",
+            "status": "Applied",
+            "applicationDate": "2025-11-15T14:00:00Z",
+            "notes": "Waiting for response.",
+            "region": "Auckland, NZ"
+          }
+        },
+        "reminders": {
+          "reminder_11111": {
+            "id": "reminder_11111",
+            "userId": "user_12345",
+            "jobApplicationId": "jobApp_98765",
+            "reminderDateTime": "2025-11-22T10:00:00Z",
+            "notes": "Prepare portfolio for interview."
+          },
+          "reminder_22222": {
+            "id": "reminder_22222",
+            "userId": "user_12345",
+            "jobApplicationId": "jobApp_54321",
+            "reminderDateTime": "2025-11-25T09:00:00Z",
+            "notes": "Follow up with recruiter via email."
+          }
+        }
+      },
+      "id": "user_12345",
+      "email": "alex.smith@example.com",
+      "displayName": "Alex Smith"
+    },
+    "user_67890": {
+      "__collections__": {
+        "jobApplications": {
+          "jobApp_11223": {
+            "id": "jobApp_11223",
+            "userId": "user_67890",
+            "company": "DataSphere",
+            "role": "Data Analyst",
+            "status": "Offer",
+            "applicationDate": "2025-10-28T11:00:00Z",
+            "notes": "Offer received, reviewing contract.",
+            "region": "Wellington, NZ"
+          },
+          "jobApp_33445": {
+            "id": "jobApp_33445",
+            "userId": "user_67890",
+            "company": "AI Solutions",
+            "role": "Machine Learning Engineer",
+            "status": "Rejected",
+            "applicationDate": "2025-09-15T16:00:00Z",
+            "notes": "Position filled.",
+            "region": "Christchurch, NZ"
+          },
+          "jobApp_55667": {
+            "id": "jobApp_55667",
+            "userId": "user_67890",
+            "company": "CloudWorks",
+            "role": "Backend Developer",
+            "status": "Applied",
+            "applicationDate": "2025-11-18T09:00:00Z",
+            "notes": "Waiting for initial screening.",
+            "region": "Auckland, NZ"
+          }
+        },
+        "reminders": {
+          "reminder_33333": {
+            "id": "reminder_33333",
+            "userId": "user_67890",
+            "jobApplicationId": "jobApp_11223",
+            "reminderDateTime": "2025-11-23T14:00:00Z",
+            "notes": "Sign and return contract."
+          },
+          "reminder_44444": {
+            "id": "reminder_44444",
+            "userId": "user_67890",
+            "jobApplicationId": "jobApp_55667",
+            "reminderDateTime": "2025-11-26T10:30:00Z",
+            "notes": "Prepare for technical screening."
+          }
+        }
+      },
+      "id": "user_67890",
+      "email": "jordan.lee@example.com",
+      "displayName": "Jordan Lee"
+    },
+    "user_99999": {
+      "__collections__": {
+        "jobApplications": {
+          "jobApp_77889": {
+            "id": "jobApp_77889",
+            "userId": "user_99999",
+            "company": "GreenTech",
+            "role": "Sustainability Consultant",
+            "status": "Interviewing",
+            "applicationDate": "2025-11-05T13:00:00Z",
+            "notes": "Second interview scheduled.",
+            "region": "Hamilton, NZ"
+          }
+        },
+        "reminders": {
+          "reminder_55555": {
+            "id": "reminder_55555",
+            "userId": "user_99999",
+            "jobApplicationId": "jobApp_77889",
+            "reminderDateTime": "2025-11-24T09:00:00Z",
+            "notes": "Prepare case study presentation."
+          }
+        }
+      },
+      "id": "user_99999",
+      "email": "sam.taylor@example.com",
+      "displayName": "Sam Taylor"
+    }
+  }
+}

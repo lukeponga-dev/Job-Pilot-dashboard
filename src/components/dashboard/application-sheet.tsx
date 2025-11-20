@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { CalendarIcon, Loader2, Trash } from 'lucide-react';
 import { format } from 'date-fns';
+import { collection, doc, serverTimestamp } from 'firebase/firestore';
 
 import { SheetFooter } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
@@ -32,6 +33,13 @@ import type { JobApplication } from '@/lib/types';
 import { JOB_STATUSES } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import {
+  addDocumentNonBlocking,
+  deleteDocumentNonBlocking,
+  updateDocumentNonBlocking,
+  useFirestore,
+  useUser,
+} from '@/firebase';
+import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -42,11 +50,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '../ui/alert-dialog';
-import {
-  addApplication,
-  deleteApplication,
-  updateApplication,
-} from '@/lib/actions';
 
 const formSchema = z.object({
   company: z.string().min(1, { message: 'Company is required.' }),
@@ -66,6 +69,8 @@ export default function ApplicationForm({
   onSave,
 }: ApplicationFormProps) {
   const { toast } = useToast();
+  const { user } = useUser();
+  const firestore = useFirestore();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -104,51 +109,57 @@ export default function ApplicationForm({
   }, [application, reset]);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (!user) {
+        toast({ variant: 'destructive', title: 'Error', description: 'You must be logged in.' });
+        return;
+    }
     setIsSubmitting(true);
 
     const applicationData = {
       ...values,
       dateApplied: format(values.dateApplied, 'yyyy-MM-dd'),
+      lastUpdated: serverTimestamp(),
+      userId: user.uid,
     };
-
-    let result;
-    if (application) {
-      result = await updateApplication(application.id, applicationData);
-    } else {
-      result = await addApplication(applicationData);
-    }
-
-    setIsSubmitting(false);
-
-    if (result.error) {
-      toast({
-        variant: 'destructive',
-        title: 'Error',
-        description: result.error,
-      });
-    } else {
-      toast({
-        title: 'Success',
-        description: application ? 'Application updated.' : 'Application added.',
-      });
-      onSave();
+    
+    try {
+        if (application) {
+          const appDocRef = doc(firestore, 'users', user.uid, 'jobApplications', application.id);
+          updateDocumentNonBlocking(appDocRef, applicationData);
+        } else {
+          const jobAppsCollection = collection(firestore, 'users', user.uid, 'jobApplications');
+          addDocumentNonBlocking(jobAppsCollection, applicationData);
+        }
+    
+        toast({
+          title: 'Success',
+          description: application ? 'Application updated.' : 'Application added.',
+        });
+        onSave();
+    } catch (error: any) {
+        toast({
+            variant: 'destructive',
+            title: 'Error',
+            description: error.message || 'An unexpected error occurred.',
+          });
+    } finally {
+        setIsSubmitting(false);
     }
   };
 
   const handleDelete = async () => {
-    if (!application) return;
-
-    const result = await deleteApplication(application.id);
-
-    if (result.error) {
+    if (!application || !user) return;
+    try {
+        const appDocRef = doc(firestore, 'users', user.uid, 'jobApplications', application.id);
+        deleteDocumentNonBlocking(appDocRef);
+        toast({ title: 'Success', description: 'Application deleted.' });
+        onSave();
+    } catch (error: any) {
         toast({
             variant: 'destructive',
             title: 'Error',
-            description: result.error,
+            description: error.message || 'Could not delete application. Please try again.',
         });
-    } else {
-        toast({ title: 'Success', description: 'Application deleted.' });
-        onSave();
     }
   };
 
