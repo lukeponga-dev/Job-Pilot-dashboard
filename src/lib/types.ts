@@ -2,7 +2,7 @@ import type { User as FirebaseUser } from 'firebase/auth';
 
 export type User = FirebaseUser;
 
-export const JOB_STATUSES = ['Applied', 'Interviewing', 'Offer', 'Rejected'] as const;
+export const JOB_STATUSES = ['Applied', 'Interviewing', 'Offer', 'Rejected', 'Withdrawn'] as const;
 
 export type JobStatus = (typeof JOB_STATUSES)[number];
 

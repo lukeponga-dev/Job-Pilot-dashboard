@@ -11,66 +11,59 @@ const firebaseConfig: FirebaseOptions = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-let app: ReturnType<typeof initializeApp> | null = null;
-let auth: Auth | null = null;
-let db: Firestore | null = null;
-let googleProvider: GoogleAuthProvider | null = null;
+let app: ReturnType<typeof initializeApp>;
+let auth: Auth;
+let db: Firestore;
+let googleProvider: GoogleAuthProvider;
 
+function initializeFirebase() {
+  if (getApps().length === 0) {
+    app = initializeApp(firebaseConfig);
+  } else {
+    app = getApp();
+  }
+  auth = getAuth(app);
+  db = getFirestore(app);
+  googleProvider = new GoogleAuthProvider();
 
-function initializeClientApp() {
-    if (typeof window === 'undefined' || !firebaseConfig.apiKey) {
-        return;
+  if (process.env.NEXT_PUBLIC_USE_EMULATORS === 'true' && process.env.NODE_ENV === 'development') {
+    try {
+      // @ts-ignore - emulatorConfig is not on the public type
+      if (!auth.emulatorConfig) {
+        connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
+      }
+    } catch (error) {
+      console.error("Error connecting to Auth emulator", error);
     }
-
-    if (app) return; // Already initialized
-
-    app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
-    auth = getAuth(app);
-    db = getFirestore(app);
-    googleProvider = new GoogleAuthProvider();
-
-    if (process.env.NEXT_PUBLIC_USE_EMULATORS === 'true' && process.env.NODE_ENV === 'development') {
-        try {
-            if (auth.emulatorConfig === null) {
-                connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
-            }
-        } catch (error) {
-            console.error("Error connecting to Auth emulator", error);
-        }
-        try {
-            // Firestore throws if it's already connected, so we check an internal property.
-            if (!(db as any)._isInitialized) {
-                connectFirestoreEmulator(db, '127.0.0.1', 8080);
-            }
-        } catch(error) {
-            console.error("Error connecting to Firestore emulator", error);
-        }
+    try {
+      // @ts-ignore - _isInitialized is not on the public type
+      if (!db._isInitialized) {
+        connectFirestoreEmulator(db, '127.0.0.1', 8080);
+      }
+    } catch(error) {
+      console.error("Error connecting to Firestore emulator", error);
     }
+  }
 }
 
-// Initialize on client-side
-initializeClientApp();
+// Initialize on first import
+if (typeof window !== 'undefined') {
+  initializeFirebase();
+}
 
-// Getter functions to be used in components
-export function getFirebaseApp() {
-    if (!app) initializeClientApp();
+export const getFirebaseApp = () => {
+    if (!app) initializeFirebase();
     return app;
 }
-
-export function getFirebaseAuth() {
-    if (!auth) initializeClientApp();
+export const getFirebaseAuth = () => {
+    if (!auth) initializeFirebase();
     return auth;
 }
-
-export function getFirestoreDb() {
-    if (!db) initializeClientApp();
+export const getFirestoreDb = () => {
+    if (!db) initializeFirebase();
     return db;
 }
-
-export function getGoogleProvider() {
-    if (!googleProvider) initializeClientApp();
+export const getGoogleProvider = () => {
+    if (!googleProvider) initializeFirebase();
     return googleProvider;
 }
-
-// Exporting for backwards compatibility if some files still use them directly
-export { app, auth, db, googleProvider };
