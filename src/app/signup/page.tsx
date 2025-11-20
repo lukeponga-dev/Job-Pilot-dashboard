@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -29,7 +29,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/firebase';
-import { initiateEmailSignUp } from '@/firebase/non-blocking-login';
 import { Icons, Logo } from '@/components/icons';
 
 
@@ -63,16 +62,26 @@ export default function SignUpPage() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
-    initiateEmailSignUp(auth, values.email, values.password);
-    // Non-blocking, redirect is handled by AuthGuard/observer
-    toast({
-      title: 'Creating account...',
-      description: 'You will be redirected shortly.',
-    });
-    setTimeout(() => {
-        setLoading(false);
-        router.push('/dashboard');
-    }, 1500);
+    try {
+      await createUserWithEmailAndPassword(auth, values.email, values.password);
+      router.push('/dashboard');
+    } catch (error: any) {
+      const errorCode = error.code;
+      let errorMessage = 'An unexpected error occurred. Please try again.';
+      if (errorCode === 'auth/email-already-in-use') {
+        errorMessage = 'This email address is already in use by another account.';
+      } else if (errorCode === 'auth/weak-password') {
+        errorMessage = 'The password is too weak. Please choose a stronger password.';
+      }
+
+      toast({
+        variant: 'destructive',
+        title: 'Sign Up Failed',
+        description: errorMessage,
+      });
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function handleGoogleSignIn() {

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -29,7 +29,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/firebase';
-import { initiateEmailSignIn } from '@/firebase/non-blocking-login';
 import { Icons, Logo } from '@/components/icons';
 
 const formSchema = z.object({
@@ -54,18 +53,18 @@ export default function LoginPage() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
-    initiateEmailSignIn(auth, values.email, values.password);
-    // Non-blocking, redirect is handled by AuthGuard/observer
-    // For simplicity in this flow, we'll just show a toast and let the observer redirect.
-    toast({
-      title: 'Signing in...',
-      description: 'You will be redirected shortly.',
-    });
-    // A real app might wait for a result or error here if not using a global observer for redirects
-    setTimeout(() => {
+    try {
+      await signInWithEmailAndPassword(auth, values.email, values.password);
+      router.push('/dashboard');
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Sign In Failed',
+        description: 'Invalid email or password. Please try again.',
+      });
+    } finally {
         setLoading(false);
-        router.push('/dashboard');
-    }, 1500)
+    }
   }
 
   async function handleGoogleSignIn() {
