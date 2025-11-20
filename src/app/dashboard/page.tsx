@@ -3,13 +3,13 @@
 import { useState, useMemo } from 'react';
 import { collection, query, orderBy } from 'firebase/firestore';
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
-import type { JobApplication, JobStatus, Reminder } from '@/lib/types';
+import type { JobApplication, JobStatus } from '@/lib/types';
 
 import { Button } from '@/components/ui/button';
-import { SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { JOB_STATUSES } from '@/lib/types';
-import ApplicationSheet from '@/components/dashboard/application-sheet';
+import ApplicationForm from '@/components/dashboard/application-sheet';
 import SummaryCards from '@/components/dashboard/summary-cards';
 import ApplicationsTable from '@/components/dashboard/applications-table';
 import StatusChart from '@/components/dashboard/status-chart';
@@ -18,6 +18,8 @@ import AiInsights from '@/components/dashboard/ai-insights';
 import Header from '@/components/dashboard/header';
 import { PlusCircle } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import type { Reminder } from '@/lib/types';
+
 
 export default function DashboardPage() {
   const { user } = useUser();
@@ -57,6 +59,11 @@ export default function DashboardPage() {
     setSelectedApplication(app);
     setIsSheetOpen(true);
   };
+  
+  const handleSheetClose = () => {
+    setIsSheetOpen(false);
+    setSelectedApplication(null);
+  }
 
   const filteredApplications = useMemo(() => {
     const apps = applications || [];
@@ -85,11 +92,7 @@ export default function DashboardPage() {
                         ))}
                     </SelectContent>
                 </Select>
-                  <ApplicationSheet
-                    isOpen={isSheetOpen}
-                    setIsOpen={setIsSheetOpen}
-                    application={selectedApplication}
-                    >
+                  <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
                     <SheetTrigger asChild>
                         <Button size="sm" className="h-8 gap-1" onClick={handleAddApplication}>
                         <PlusCircle className="h-3.5 w-3.5" />
@@ -98,7 +101,18 @@ export default function DashboardPage() {
                         </span>
                         </Button>
                     </SheetTrigger>
-                  </ApplicationSheet>
+                    <SheetContent className="sm:max-w-lg">
+                       <SheetHeader>
+                        <SheetTitle className="font-headline">
+                          {selectedApplication ? 'Edit Application' : 'Add Application'}
+                        </SheetTitle>
+                        <SheetDescription>
+                          {selectedApplication ? 'Update the details of your job application.' : 'Track a new job application.'}
+                        </SheetDescription>
+                      </SheetHeader>
+                      <ApplicationForm application={selectedApplication} onSave={handleSheetClose} />
+                    </SheetContent>
+                  </Sheet>
                 </div>
               </div>
               {loading ? (
