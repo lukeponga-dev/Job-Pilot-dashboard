@@ -14,6 +14,22 @@ type AiInsightsProps = {
   applications: JobApplication[];
 };
 
+// Helper function to safely convert different date types to a Date object
+const toDate = (date: any): Date | null => {
+    if (!date) return null;
+    if (date instanceof Date) return date;
+    // Handle Firestore Timestamp
+    if (typeof date === 'object' && date !== null && typeof date.toDate === 'function') {
+      return date.toDate();
+    }
+    // Handle string or number
+    const d = new Date(date);
+    if (!isNaN(d.getTime())) {
+      return d;
+    }
+    return null;
+  };
+
 export default function AiInsights({ applications }: AiInsightsProps) {
   const [loading, setLoading] = useState(false);
   const [insights, setInsights] = useState<AnalyzeApplicationDataOutput | null>(null);
@@ -22,7 +38,14 @@ export default function AiInsights({ applications }: AiInsightsProps) {
   const handleAnalysis = async () => {
     setLoading(true);
     setInsights(null);
-    const result = await getAiInsights(applications);
+
+    // Convert complex objects (like Firestore Timestamps) to plain objects
+    const plainApplications = applications.map(app => ({
+      ...app,
+      lastUpdated: toDate(app.lastUpdated)?.toISOString() ?? new Date().toISOString(),
+    }));
+
+    const result = await getAiInsights(plainApplications);
 
     if (result.error) {
       toast({
