@@ -1,94 +1,181 @@
 {
   "entities": {
-    "jobApplication": {
-      "title": "Job Application",
-      "description": "Represents a user's job application.",
+    "JobApplication": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "JobApplication",
       "type": "object",
+      "description": "Represents a job application submitted by a user.",
       "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the job application."
+        },
         "userId": {
           "type": "string",
-          "description": "The ID of the user who owns this application."
+          "description": "Reference to User. (Relationship: User 1:N JobApplication)"
         },
         "company": {
           "type": "string",
-          "description": "The name of the company."
+          "description": "The name of the company the application was submitted to."
         },
         "role": {
           "type": "string",
-          "description": "The job role or title."
-        },
-        "url": {
-          "type": "string",
-          "format": "uri",
-          "description": "The URL of the job posting."
+          "description": "The job title or role applied for."
         },
         "status": {
           "type": "string",
-          "description": "The current status of the application.",
-          "enum": ["Applied", "Interviewing", "Offer", "Rejected"]
+          "description": "The current status of the application (e.g., Applied, Interviewing, Offer, Rejected)."
         },
-        "dateApplied": {
+        "applicationDate": {
           "type": "string",
-          "format": "date",
-          "description": "The date the application was submitted."
+          "description": "The date the application was submitted.",
+          "format": "date-time"
         },
-        "lastUpdated": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The timestamp of the last update."
+        "notes": {
+          "type": "string",
+          "description": "Any notes or comments about the application."
+        },
+        "region": {
+          "type": "string",
+          "description": "The geographical region where the job is located."
         }
       },
-      "required": ["userId", "company", "role", "status", "dateApplied", "lastUpdated"]
+      "required": [
+        "id",
+        "userId",
+        "company",
+        "role",
+        "status",
+        "applicationDate"
+      ]
     },
-    "reminder": {
-        "title": "Reminder",
-        "description": "Represents a reminder for a job application.",
-        "type": "object",
-        "properties": {
-            "userId": {
-                "type": "string",
-                "description": "The ID of the user who owns this reminder."
-            },
-            "jobId": {
-                "type": "string",
-                "description": "The ID of the associated job application."
-            },
-            "jobCompany": {
-                "type": "string",
-                "description": "The company name for the associated job."
-            },
-            "jobRole": {
-                "type": "string",
-                "description": "The role for the associated job."
-            },
-            "title": {
-                "type": "string",
-                "description": "The title of the reminder."
-            },
-            "date": {
-                "type": "string",
-                "format": "date",
-                "description": "The date of the reminder."
-            }
+    "Reminder": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Reminder",
+      "type": "object",
+      "description": "Represents a reminder for an upcoming interview or follow-up related to a job application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the reminder."
         },
-        "required": ["userId", "jobId", "title", "date"]
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Reminder)"
+        },
+        "jobApplicationId": {
+          "type": "string",
+          "description": "Reference to JobApplication. (Relationship: JobApplication 1:N Reminder)"
+        },
+        "reminderDateTime": {
+          "type": "string",
+          "description": "The date and time the reminder should trigger.",
+          "format": "date-time"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Additional notes or details about the reminder."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "jobApplicationId",
+        "reminderDateTime"
+      ]
+    },
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the Job Pilot application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user."
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email address.",
+          "format": "email"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The user's display name."
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "displayName"
+      ]
     }
   },
   "auth": {
-    "providers": ["Google", "Email/Password"]
+    "providers": [
+      "password",
+      "anonymous"
+    ]
   },
   "firestore": {
-    "/jobApplications/{docId}": {
-      "schema": {
-        "$ref": "#/entities/jobApplication"
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profiles.  This collection is primarily used for authentication and user metadata, not job application data.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            }
+          ]
+        }
       },
-      "description": "Collection of all job applications."
-    },
-    "/reminders/{docId}": {
-        "schema": {
-          "$ref": "#/entities/reminder"
-        },
-        "description": "Collection of all reminders."
+      {
+        "path": "/users/{userId}/jobApplications/{jobApplicationId}",
+        "definition": {
+          "entityName": "JobApplication",
+          "schema": {
+            "$ref": "#/backend/entities/JobApplication"
+          },
+          "description": "Stores job applications for a specific user, ensuring path-based ownership and easy access control.  No denormalized fields are required.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "jobApplicationId",
+              "description": "The unique identifier of the job application."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/reminders/{reminderId}",
+        "definition": {
+          "entityName": "Reminder",
+          "schema": {
+            "$ref": "#/backend/entities/Reminder"
+          },
+          "description": "Stores reminders for a specific user, linking to a job application.  Path-based ownership ensures only the user can manage their reminders. No denormalized fields are required.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "reminderId",
+              "description": "The unique identifier of the reminder."
+            }
+          ]
+        }
       }
+    ],
+    "reasoning": "The Firestore data structure is designed to ensure secure and scalable data management for the Job Pilot application. It leverages path-based ownership for user-specific data, ensuring that only the authenticated user can access their own job applications and reminders. This approach avoids complex authorization logic and maintains data isolation.\n\nThe `/users/{userId}/jobApplications/{jobApplicationId}` path establishes a clear ownership model. Each job application is stored under the user's document, making it straightforward to implement security rules that grant access only to the application's owner (Authorization Independence).\n\nSimilarly, reminders are stored under `/users/{userId}/reminders/{reminderId}`, further reinforcing the path-based ownership pattern and ensuring that only the authenticated user can manage their reminders (Authorization Independence).\n\nThis design inherently supports the required QAPs (Rules are not Filters) because list operations can be securely performed at the `/users/{userId}/jobApplications` and `/users/{userId}/reminders` paths, as the security rules only need to verify that `request.auth.uid == userId`."
   }
 }

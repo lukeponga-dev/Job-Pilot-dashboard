@@ -1,16 +1,172 @@
+/**
+ * Core Philosophy: This ruleset enforces a strict user-ownership model. All user-generated
+ * data, including job applications and reminders, is stored in subcollections under a
+ * specific user's document. This creates secure, isolated data "silos" where users can
+ * only ever access their own information.
+ *
+ * Data Structure: The data is organized hierarchically with `/users/{userId}` as the root
+ * for all of a user's private data. This path-based ownership is the foundation of the
+ * security model, making rules simple, performant, and easy to understand.
+ *
+ * Key Security Decisions:
+ * - User Enumeration Disabled: Listing the top-level `/users` collection is explicitly
+ *   forbidden to protect user privacy and prevent data mining.
+ * - Account Deletion: Users cannot delete their own profile documents from the client. This
+ *   is a sensitive operation that should be handled by a trusted server environment.
+ * - Strict Ownership: There is no concept of shared or public data. All access checks
+ *   verify that the authenticated user's ID matches the `userId` in the document path.
+ *
+ * Denormalization for Authorization: This ruleset relies on path-based security, which is an
+ * implicit form of denormalization. The user's ID in the path (`/users/{userId}/...`) is the
+ * sole authority for access control, eliminating the need for slow `get()` calls to other
+ * documents. To ensure data integrity, create operations validate that an internal `userId`
+ * field matches the `userId` from the path.
+ *
+ * Structural Segregation: The entire data model is built on segregation. Each user's data is
+ * structurally separated into its own document tree, which is the most secure and performant
+ * way to manage private user content.
+ */
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Users can only read, write, and update their own job applications
-    match /jobApplications/{docId} {
-      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
-      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+
+    // ------------------------------------------------------------------------
+    // Helper Functions
+    // ------------------------------------------------------------------------
+
+    /**
+     * Checks if the user is authenticated.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * Verifies if the authenticated user's UID matches the provided userId.
+     * This is the core function for enforcing user ownership.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /**
+     * Verifies ownership for an existing document. Used for update/delete.
+     * Ensures the operation targets a document that actually exists.
+     */
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
+    }
+
+    // --- User Document Validation ---
+
+    /**
+     * Validates that the user document being created has an 'id' field
+     * that matches the user's authentication UID.
+     */
+    function isValidUserCreate(userId) {
+      return request.resource.data.id == userId;
+    }
+
+    /**
+     * Enforces immutability of the user's unique 'id' field on update.
+     * This prevents re-assigning a user profile to a different user.
+     */
+    function isUserRecordImmutable() {
+      return request.resource.data.id == resource.data.id;
     }
     
-    // Users can only manage their own reminders
-    match /reminders/{docId} {
-      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
-      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    // --- JobApplication Subcollection Validation ---
+
+    /**
+     * Validates that a new JobApplication document correctly links its
+     * internal 'userId' field back to the owner defined in the path.
+     */
+    function isValidJobApplicationCreate(userId) {
+      return request.resource.data.userId == userId;
+    }
+
+    /**
+     * Enforces immutability of the 'userId' field on a JobApplication,
+     * preventing it from being moved between users.
+     */
+    function isJobApplicationRecordImmutable() {
+      return request.resource.data.userId == resource.data.userId;
+    }
+    
+    // --- Reminder Subcollection Validation ---
+
+    /**
+     * Validates that a new Reminder document correctly links its
+     * internal 'userId' field back to the owner defined in the path.
+     */
+    function isValidReminderCreate(userId) {
+      return request.resource.data.userId == userId;
+    }
+
+    /**
+     * Enforces immutability of the 'userId' field on a Reminder,
+     * preventing it from being moved between users.
+     */
+    function isReminderRecordImmutable() {
+      return request.resource.data.userId == resource.data.userId;
+    }
+
+    // ------------------------------------------------------------------------
+    // Collection Rules
+    // ------------------------------------------------------------------------
+
+    /**
+     * @description Manages user profile documents. Users can create, read, and
+     *   update their own profile, but cannot see other users' profiles or delete their own.
+     * @path /users/{userId}
+     * @allow A user (uid: 'user123') creating their own profile document.
+     *   (create) at /users/user123
+     * @deny An anonymous user trying to list all user profiles.
+     *   (list) at /users
+     * @principle Enforces Self-Creation for a user's root document and prevents user enumeration.
+     */
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow list: if false;
+      allow create: if isOwner(userId) && isValidUserCreate(userId);
+      allow update: if isExistingOwner(userId) && isUserRecordImmutable();
+      allow delete: if false;
+
+      /**
+       * @description Secures job applications within a user's private data silo.
+       *   Only the owning user has full read and write access to their applications.
+       * @path /users/{userId}/jobApplications/{jobApplicationId}
+       * @allow A user (uid: 'user123') reading their own job application.
+       *   (get) at /users/user123/jobApplications/app456
+       * @deny A different user (uid: 'user789') trying to delete another user's application.
+       *   (delete) at /users/user123/jobApplications/app456
+       * @principle Restricts access to a user's own data tree using path-based ownership.
+       */
+      match /jobApplications/{jobApplicationId} {
+        allow get: if isOwner(userId);
+        allow list: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidJobApplicationCreate(userId);
+        allow update: if isExistingOwner(userId) && isJobApplicationRecordImmutable();
+        allow delete: if isExistingOwner(userId);
+      }
+
+      /**
+       * @description Secures reminders within a user's private data silo.
+       *   Only the owning user has full read and write access to their reminders.
+       * @path /users/{userId}/reminders/{reminderId}
+       * @allow A user (uid: 'user123') listing all of their own reminders.
+       *   (list) at /users/user123/reminders
+       * @deny A different user (uid: 'user789') trying to create a reminder for another user.
+       *   (create) at /users/user123/reminders/rem456
+       * @principle Restricts access to a user's own data tree using path-based ownership.
+       */
+      match /reminders/{reminderId} {
+        allow get: if isOwner(userId);
+        allow list: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidReminderCreate(userId);
+        allow update: if isExistingOwner(userId) && isReminderRecordImmutable();
+        allow delete: if isExistingOwner(userId);
+      }
     }
   }
 }
