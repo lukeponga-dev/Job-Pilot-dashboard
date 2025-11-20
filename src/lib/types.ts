@@ -2,7 +2,16 @@ import type { User as FirebaseUser } from 'firebase/auth';
 
 export type User = FirebaseUser;
 
-export const JOB_STATUSES = ['Applied', 'Interviewing', 'Offer', 'Rejected'] as const;
+export const JOB_STATUSES = [
+  'Applied',
+  'Interviewing',
+  'Offer',
+  'Rejected',
+  'Viewed',
+  'Not selected',
+  'Expired',
+  'Unlikely to progress',
+] as const;
 
 export type JobStatus = (typeof JOB_STATUSES)[number];
 
@@ -15,6 +24,7 @@ export type JobApplication = {
   status: JobStatus;
   dateApplied: string;
   lastUpdated: string;
+  location?: string;
 };
 
 export type Reminder = {
