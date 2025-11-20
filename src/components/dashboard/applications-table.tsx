@@ -37,6 +37,21 @@ const statusColors: Record<JobStatus, string> = {
     'Unlikely to progress': 'bg-pink-100 text-pink-800 dark:bg-pink-900/50 dark:text-pink-300',
 };
 
+// Helper function to safely convert different date types to a Date object
+const toDate = (date: any): Date | null => {
+    if (!date) return null;
+    if (date instanceof Date) return date;
+    // Handle Firestore Timestamp
+    if (typeof date === 'object' && date !== null && typeof date.toDate === 'function') {
+      return date.toDate();
+    }
+    // Handle string or number
+    const d = new Date(date);
+    if (!isNaN(d.getTime())) {
+      return d;
+    }
+    return null;
+  };
 
 export default function ApplicationsTable({ applications, onEdit }: ApplicationsTableProps) {
   if (applications.length === 0) {
@@ -66,36 +81,39 @@ export default function ApplicationsTable({ applications, onEdit }: Applications
             </TableRow>
           </TableHeader>
           <TableBody>
-            {applications.map((app) => (
-              <TableRow key={app.id} className="cursor-pointer" onClick={() => onEdit(app)}>
-                <TableCell>
-                  <div className="font-medium">{app.company}</div>
-                  <div className="text-sm text-muted-foreground md:hidden">{app.role}</div>
-                </TableCell>
-                <TableCell className="hidden sm:table-cell">{app.role}</TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  <Badge className={`border-none ${statusColors[app.status]}`} variant="outline">
-                    {app.status}
-                  </Badge>
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {formatDistanceToNow(new Date(app.lastUpdated), { addSuffix: true })}
-                </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button aria-haspopup="true" size="icon" variant="ghost">
-                        <MoreHorizontal className="h-4 w-4" />
-                        <span className="sr-only">Toggle menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
-                        <DropdownMenuItem onSelect={() => onEdit(app)}>Edit</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            ))}
+            {applications.map((app) => {
+                const lastUpdatedDate = toDate(app.lastUpdated);
+                return (
+                    <TableRow key={app.id} className="cursor-pointer" onClick={() => onEdit(app)}>
+                        <TableCell>
+                        <div className="font-medium">{app.company}</div>
+                        <div className="text-sm text-muted-foreground md:hidden">{app.role}</div>
+                        </TableCell>
+                        <TableCell className="hidden sm:table-cell">{app.role}</TableCell>
+                        <TableCell className="hidden sm:table-cell">
+                        <Badge className={`border-none ${statusColors[app.status]}`} variant="outline">
+                            {app.status}
+                        </Badge>
+                        </TableCell>
+                        <TableCell className="hidden md:table-cell">
+                            {lastUpdatedDate ? formatDistanceToNow(lastUpdatedDate, { addSuffix: true }) : 'N/A'}
+                        </TableCell>
+                        <TableCell>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                            <Button aria-haspopup="true" size="icon" variant="ghost">
+                                <MoreHorizontal className="h-4 w-4" />
+                                <span className="sr-only">Toggle menu</span>
+                            </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
+                                <DropdownMenuItem onSelect={() => onEdit(app)}>Edit</DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                        </TableCell>
+                    </TableRow>
+                );
+            })}
           </TableBody>
         </Table>
       </CardContent>

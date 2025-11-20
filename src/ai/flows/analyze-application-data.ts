@@ -26,6 +26,10 @@ const AnalyzeApplicationDataInputSchema = z.array(
         'Offer',
         'Rejected',
         'Withdrawn',
+        'Viewed',
+        'Not selected',
+        'Expired',
+        'Unlikely to progress',
       ])
       .describe('The current status of the application.'),
     dateApplied: z.string().describe('The date the application was submitted.'),
@@ -75,7 +79,7 @@ const analyzeApplicationDataPrompt = ai.definePrompt({
   output: {schema: AnalyzeApplicationDataOutputSchema},
   prompt: `You are an AI job search strategist. Analyze the following job application data to identify trends and provide insights.
 
-Job Application Data: {{{JSON.stringify input}}}
+Job Application Data: {{{JSON.stringify .}}}
 
 Provide the following analysis:
 

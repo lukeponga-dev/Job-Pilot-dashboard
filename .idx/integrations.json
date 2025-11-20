@@ -1,4 +1,6 @@
 {
-  "firebase_hosting": {},
+  "firebase_hosting": {
+    "deploymentHostingUrl": "https://studio-3331756920-dfce2.web.app"
+  },
   "cloud_run_deploy": {}
 }
