@@ -19,6 +19,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
@@ -57,6 +58,8 @@ const formSchema = z.object({
   url: z.string().url({ message: 'Please enter a valid URL.' }).or(z.literal('')),
   status: z.enum(JOB_STATUSES),
   dateApplied: z.date({ required_error: 'Date applied is required.' }),
+  location: z.string().optional(),
+  notes: z.string().optional(),
 });
 
 type ApplicationFormProps = {
@@ -81,6 +84,8 @@ export default function ApplicationForm({
       url: '',
       status: 'Applied',
       dateApplied: new Date(),
+      location: '',
+      notes: '',
     },
   });
 
@@ -96,6 +101,8 @@ export default function ApplicationForm({
         ...application,
         url: application.url || '',
         dateApplied: new Date(application.dateApplied),
+        location: application.location || '',
+        notes: application.notes || '',
       });
     } else {
       reset({
@@ -104,6 +111,8 @@ export default function ApplicationForm({
         url: '',
         status: 'Applied',
         dateApplied: new Date(),
+        location: '',
+        notes: '',
       });
     }
   }, [application, reset]);
@@ -166,7 +175,7 @@ export default function ApplicationForm({
   return (
     <>
       <Form {...form}>
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-4">
           <FormField
             control={control}
             name="company"
@@ -188,6 +197,19 @@ export default function ApplicationForm({
                 <FormLabel>Role</FormLabel>
                 <FormControl>
                   <Input placeholder="e.g. Software Engineer" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={control}
+            name="location"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Location</FormLabel>
+                <FormControl>
+                  <Input placeholder="e.g. Auckland, NZ" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -267,6 +289,19 @@ export default function ApplicationForm({
               )}
             />
           </div>
+            <FormField
+                control={control}
+                name="notes"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Notes</FormLabel>
+                    <FormControl>
+                    <Textarea placeholder="Add any notes here..." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
 
           <SheetFooter className="pt-8">
             {application && (

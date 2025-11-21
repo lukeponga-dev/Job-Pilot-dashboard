@@ -101,91 +101,89 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40">
-      <div className="flex flex-col sm:gap-4 sm:py-4">
-        <Header applications={applications || []} />
-        <main className="flex flex-1 flex-col gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-            <SummaryCards applications={applications || []} />
-            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
-              <div className="flex items-center gap-2">
-                <h2 className="text-xl font-headline font-semibold">Applications</h2>
-                {selectedIds.length > 0 && (
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button variant="destructive" size="sm" className="h-8 gap-1">
-                        <Trash className="h-3.5 w-3.5" />
-                        Delete ({selectedIds.length})
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                        <AlertDialogDescription>
-                          This will permanently delete {selectedIds.length} selected applications. This action cannot be undone.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={handleBulkDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                          Delete
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                )}
-              </div>
-              <div className="ml-auto flex items-center gap-2 mt-4 sm:mt-0">
-                <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as any)}>
-                  <SelectTrigger className="w-full sm:w-[160px]">
-                    <SelectValue placeholder="Filter by status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Statuses</SelectItem>
-                    {JOB_STATUSES.map(status => (
-                      <SelectItem key={status} value={status}>{status}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-                  <SheetTrigger asChild>
-                    <Button size="sm" className="h-8 gap-1" onClick={handleAddApplication}>
-                      <PlusCircle className="h-3.5 w-3.5" />
-                      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                        Add Application
-                      </span>
+    <>
+      <Header applications={applications || []} />
+      <main className="flex flex-1 flex-col gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+          <SummaryCards applications={applications || []} />
+          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+            <div className="flex items-center gap-2">
+              <h2 className="text-xl font-headline font-semibold">Applications</h2>
+              {selectedIds.length > 0 && (
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive" size="sm" className="h-8 gap-1">
+                      <Trash className="h-3.5 w-3.5" />
+                      Delete ({selectedIds.length})
                     </Button>
-                  </SheetTrigger>
-                  <SheetContent className="sm:max-w-lg">
-                    <SheetHeader>
-                      <SheetTitle className="font-headline">
-                        {selectedApplication ? 'Edit Application' : 'Add Application'}
-                      </SheetTitle>
-                      <SheetDescription>
-                        {selectedApplication ? 'Update the details of your job application.' : 'Track a new job application.'}
-                      </SheetDescription>
-                    </SheetHeader>
-                    <ApplicationForm application={selectedApplication} onSave={handleSheetClose} />
-                  </SheetContent>
-                </Sheet>
-              </div>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This will permanently delete {selectedIds.length} selected applications. This action cannot be undone.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleBulkDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                        Delete
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              )}
             </div>
-            {loading ? (
-              <Skeleton className="h-96 w-full" />
-            ) : (
-              <ApplicationsTable
-                applications={filteredApplications}
-                onEdit={handleEditApplication}
-                selectedIds={selectedIds}
-                setSelectedIds={setSelectedIds}
-              />
-            )}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-                <StatusChart applications={applications || []} />
-                <Reminders reminders={reminders || []} applications={applications || []} />
-                <AiInsights applications={applications || []} />
+            <div className="ml-auto flex items-center gap-2 mt-4 sm:mt-0">
+              <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as any)}>
+                <SelectTrigger className="w-full sm:w-[160px]">
+                  <SelectValue placeholder="Filter by status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Statuses</SelectItem>
+                  {JOB_STATUSES.map(status => (
+                    <SelectItem key={status} value={status}>{status}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+                <SheetTrigger asChild>
+                  <Button size="sm" className="h-8 gap-1" onClick={handleAddApplication}>
+                    <PlusCircle className="h-3.5 w-3.5" />
+                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                      Add Application
+                    </span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className="sm:max-w-lg">
+                  <SheetHeader>
+                    <SheetTitle className="font-headline">
+                      {selectedApplication ? 'Edit Application' : 'Add Application'}
+                    </SheetTitle>
+                    <SheetDescription>
+                      {selectedApplication ? 'Update the details of your job application.' : 'Track a new job application.'}
+                    </SheetDescription>
+                  </SheetHeader>
+                  <ApplicationForm application={selectedApplication} onSave={handleSheetClose} />
+                </SheetContent>
+              </Sheet>
             </div>
-        </main>
-      </div>
-    </div>
+          </div>
+          {loading ? (
+            <Skeleton className="h-96 w-full" />
+          ) : (
+            <ApplicationsTable
+              applications={filteredApplications}
+              onEdit={handleEditApplication}
+              selectedIds={selectedIds}
+              setSelectedIds={setSelectedIds}
+            />
+          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+              <StatusChart applications={applications || []} />
+              <Reminders reminders={reminders || []} applications={applications || []} />
+              <AiInsights applications={applications || []} />
+          </div>
+      </main>
+    </>
   );
 }

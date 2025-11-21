@@ -25,6 +25,7 @@ export type JobApplication = {
   dateApplied: string;
   lastUpdated: string;
   location?: string;
+  notes?: string;
 };
 
 export type Reminder = {

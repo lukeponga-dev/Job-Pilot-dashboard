@@ -2,177 +2,126 @@
 
 import Link from 'next/link';
 import { Briefcase, Bell, BarChart3, Shield, Users, Zap } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function HomePage() {
     return (
-        <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
-            {/* Header */}
-            <header className="sticky top-0 z-50 border-b bg-white/80 backdrop-blur-sm dark:bg-gray-900/80 dark:border-gray-800">
-                <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-                    <div className="flex items-center space-x-2">
-                        <Briefcase className="h-8 w-8 text-blue-600 dark:text-blue-400" />
-                        <span className="text-2xl font-bold text-gray-900 dark:text-white">JobTrack</span>
-                    </div>
-                    <nav className="flex items-center space-x-4">
-                        <Link
-                            href="/login"
-                            className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors font-medium"
-                        >
-                            Sign In
-                        </Link>
-                        <Link
-                            href="/signup"
-                            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
-                        >
-                            Get Started
-                        </Link>
-                    </nav>
-                </div>
-            </header>
-
-            {/* Hero Section */}
-            <section id="hero" className="container mx-auto px-4 py-20 text-center">
-                <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-                    Track Your Job Search
-                    <br />
-                    <span className="text-blue-600 dark:text-blue-400">Land Your Dream Job</span>
-                </h1>
-                <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-                    Stay organized and never miss an opportunity. JobTrack helps you manage applications,
-                    track interviews, and analyze your job search progress—all in one place.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link
-                        href="/signup"
-                        className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors font-medium text-lg"
-                    >
-                        Start Tracking Free
-                    </Link>
-                    <Link
-                        href="/login"
-                        className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-8 py-4 rounded-lg border-2 border-gray-300 dark:border-gray-700 hover:border-blue-600 dark:hover:border-blue-400 transition-colors font-medium text-lg"
-                    >
-                        Sign In
-                    </Link>
-                </div>
-            </section>
-
-            {/* Features Grid */}
-            <section id="features" className="container mx-auto px-4 py-20">
-                <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
-                    Everything You Need to Succeed
-                </h2>
-                <div className="grid md:grid-cols-3 gap-8">
-                    {/* Feature 1 */}
-                    <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-                        <div className="bg-blue-100 dark:bg-blue-900 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-                            <Briefcase className="h-7 w-7 text-blue-600 dark:text-blue-400" />
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                            Track Applications
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-300">
-                            Keep all your job applications organized in one place. Track status, dates, and
-                            important details for every opportunity.
-                        </p>
-                    </div>
-
-                    {/* Feature 2 */}
-                    <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-                        <div className="bg-green-100 dark:bg-green-900 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-                            <Bell className="h-7 w-7 text-green-600 dark:text-green-400" />
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                            Interview Reminders
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-300">
-                            Never miss an interview again. Set reminders for phone screens, interviews, and
-                            follow-ups to stay on top of your schedule.
-                        </p>
-                    </div>
-
-                    {/* Feature 3 */}
-                    <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-                        <div className="bg-purple-100 dark:bg-purple-900 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-                            <BarChart3 className="h-7 w-7 text-purple-600 dark:text-purple-400" />
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                            Visual Analytics
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-300">
-                            Understand your job search with clear charts and statistics. See your progress and
-                            identify areas for improvement.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Stats Section */}
-            <section id="about" className="bg-blue-600 dark:bg-blue-700 py-16">
-                <div className="container mx-auto px-4">
-                    <div className="grid md:grid-cols-3 gap-8 text-center text-white">
-                        <div>
-                            <div className="flex items-center justify-center mb-2">
-                                <Users className="h-8 w-8 mr-2" />
-                                <div className="text-4xl font-bold">100%</div>
-                            </div>
-                            <p className="text-blue-100">NZ Job Market Coverage</p>
-                        </div>
-                        <div>
-                            <div className="flex items-center justify-center mb-2">
-                                <Zap className="h-8 w-8 mr-2" />
-                                <div className="text-4xl font-bold">Free</div>
-                            </div>
-                            <p className="text-blue-100">Forever Free Service</p>
-                        </div>
-                        <div>
-                            <div className="flex items-center justify-center mb-2">
-                                <Shield className="h-8 w-8 mr-2" />
-                                <div className="text-4xl font-bold">Secure</div>
-                            </div>
-                            <p className="text-blue-100">Your Data is Protected</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* CTA Section */}
-            <section id="pricing" className="container mx-auto px-4 py-20 text-center">
-                <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                    Ready to Take Control of Your Job Search?
-                </h2>
-                <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-                    Join JobTrack today and start tracking your applications like a pro.
-                </p>
-                <Link
-                    href="/signup"
-                    className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors font-medium text-lg"
-                >
-                    Get Started for Free
+        <div className="flex flex-col min-h-dvh">
+            <header className="px-4 lg:px-6 h-14 flex items-center">
+                <Link href="/" className="flex items-center justify-center">
+                    <Briefcase className="h-6 w-6 text-primary" />
+                    <span className="ml-2 text-xl font-bold">JobTrack</span>
                 </Link>
-            </section>
-
-            {/* Footer */}
-            <footer className="border-t bg-gray-50 dark:bg-gray-900 dark:border-gray-800">
-                <div className="container mx-auto px-4 py-8">
-                    <div className="flex flex-col md:flex-row justify-between items-center">
-                        <div className="flex items-center space-x-2 mb-4 md:mb-0">
-                            <Briefcase className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-                            <span className="text-lg font-bold text-gray-900 dark:text-white">JobTrack</span>
+                <nav className="ml-auto flex gap-4 sm:gap-6">
+                    <Button variant="ghost" asChild>
+                        <Link href="/login">Sign In</Link>
+                    </Button>
+                    <Button asChild>
+                        <Link href="/signup">Get Started</Link>
+                    </Button>
+                </nav>
+            </header>
+            <main className="flex-1">
+                <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
+                    <div className="container px-4 md:px-6">
+                        <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
+                            <div className="flex flex-col justify-center space-y-4">
+                                <div className="space-y-2">
+                                    <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+                                        Track Your Job Search, Land Your Dream Job
+                                    </h1>
+                                    <p className="max-w-[600px] text-muted-foreground md:text-xl">
+                                        Stay organized and never miss an opportunity. JobTrack helps you manage applications, track interviews, and analyze your job search progress—all in one place.
+                                    </p>
+                                </div>
+                                <div className="flex flex-col gap-2 min-[400px]:flex-row">
+                                    <Button asChild size="lg">
+                                        <Link href="/signup">Start Tracking Free</Link>
+                                    </Button>
+                                    <Button asChild variant="outline" size="lg">
+                                        <Link href="/login">Sign In</Link>
+                                    </Button>
+                                </div>
+                            </div>
+                            <img
+                                src="https://picsum.photos/seed/jobtrack-hero/1200/800"
+                                data-ai-hint="dashboard application"
+                                alt="Hero"
+                                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
+                            />
                         </div>
-                        <nav className="flex space-x-6 text-sm text-gray-600 dark:text-gray-400">
-                            <Link href="/privacy" className="hover:text-gray-900 dark:hover:text-white transition-colors">
-                                Privacy Policy
-                            </Link>
-                            <Link href="/terms" className="hover:text-gray-900 dark:hover:text-white transition-colors">
-                                Terms of Service
-                            </Link>
-                        </nav>
                     </div>
-                    <div className="text-center mt-6 text-sm text-gray-500 dark:text-gray-400">
-                        © {new Date().getFullYear()} JobTrack. Made with ❤️ in New Zealand.
+                </section>
+                <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+                    <div className="container px-4 md:px-6">
+                        <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                            <div className="space-y-2">
+                                <div className="inline-block rounded-lg bg-secondary px-3 py-1 text-sm">Key Features</div>
+                                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Everything You Need to Succeed</h2>
+                                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                                    Our platform is packed with features to help you stay on top of your job search and make data-driven decisions.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
+                            <div className="grid gap-1">
+                                <div className="flex items-center gap-2">
+                                    <Briefcase className="h-6 w-6 text-primary" />
+                                    <h3 className="text-xl font-bold">Track Applications</h3>
+                                </div>
+                                <p className="text-muted-foreground">
+                                    Keep all your job applications organized in one place. Track status, dates, and important details.
+                                </p>
+                            </div>
+                            <div className="grid gap-1">
+                                <div className="flex items-center gap-2">
+                                    <Bell className="h-6 w-6 text-primary" />
+                                    <h3 className="text-xl font-bold">Interview Reminders</h3>
+                                </div>
+                                <p className="text-muted-foreground">
+                                    Never miss an interview again. Set reminders for calls, interviews, and follow-ups.
+                                </p>
+                            </div>
+                            <div className="grid gap-1">
+                                <div className="flex items-center gap-2">
+                                    <BarChart3 className="h-6 w-6 text-primary" />
+                                    <h3 className="text-xl font-bold">Visual Analytics</h3>
+                                </div>
+                                <p className="text-muted-foreground">
+                                    Understand your job search with clear charts and statistics to see your progress.
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </section>
+                <section className="w-full py-12 md:py-24 lg:py-32">
+                    <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
+                        <div className="space-y-3">
+                            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                                Ready to Take Control of Your Job Search?
+                            </h2>
+                            <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                                Join JobTrack today and start tracking your applications like a pro. It's free to get started.
+                            </p>
+                        </div>
+                        <div className="mx-auto w-full max-w-sm space-y-2">
+                            <Button asChild size="lg" className="w-full">
+                                <Link href="/signup">Get Started for Free</Link>
+                            </Button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+            <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
+                <p className="text-xs text-muted-foreground">&copy; {new Date().getFullYear()} JobTrack. All rights reserved.</p>
+                <nav className="sm:ml-auto flex gap-4 sm:gap-6">
+                    <Link href="/terms" className="text-xs hover:underline underline-offset-4">
+                        Terms of Service
+                    </Link>
+                    <Link href="/privacy" className="text-xs hover:underline underline-offset-4">
+                        Privacy Policy
+                    </Link>
+                </nav>
             </footer>
         </div>
     );

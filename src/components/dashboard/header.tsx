@@ -1,14 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { FileDown, FileUp, LogOut, PanelLeft, FileText, StickyNote, ScanText } from 'lucide-react';
+import { FileDown, FileUp, LogOut } from 'lucide-react';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Papa from 'papaparse';
 import { format } from 'date-fns';
 import { collection, serverTimestamp } from 'firebase/firestore';
 import React from 'react';
-import Link from 'next/link';
 import * as XLSX from 'xlsx';
 
 import {
@@ -19,15 +18,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ThemeToggle } from '@/components/theme-toggle';
-import { Logo } from '@/components/icons';
 import { useAuth, useUser, useFirestore, addDocumentNonBlocking } from '@/firebase';
 import type { JobApplication } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
-import { useMobile } from '@/hooks/use-mobile';
+import { SidebarTrigger } from '../ui/sidebar';
 
 
 type HeaderProps = {
@@ -41,8 +38,6 @@ export default function Header({ applications }: HeaderProps) {
   const router = useRouter();
   const { toast } = useToast();
   const fileInputRef = React.useRef<HTMLInputElement>(null);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const isMobile = useMobile();
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -143,62 +138,9 @@ export default function Header({ applications }: HeaderProps) {
     }
   };
 
-  const handleMobileNavClick = (action: (() => void) | string) => {
-    if (typeof action === 'string') {
-        router.push(action);
-    } else {
-        action();
-    }
-    setIsMobileMenuOpen(false);
-  }
-
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-        {/* Mobile Nav */}
-        <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-            <SheetTrigger asChild>
-                <Button size="icon" variant="outline" className="sm:hidden">
-                    <PanelLeft className="h-5 w-5" />
-                    <span className="sr-only">Toggle Menu</span>
-                </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="sm:max-w-xs">
-                <SheetHeader className="text-left">
-                    <SheetTitle className="font-headline">JobTrack</SheetTitle>
-                    <SheetDescription>
-                        AI-powered tools for your job search.
-                    </SheetDescription>
-                </SheetHeader>
-                <nav className="grid gap-6 text-lg font-medium mt-8">
-                    <button className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground text-left" onClick={() => handleMobileNavClick(() => fileInputRef.current?.click())}>
-                        <FileUp className="h-5 w-5" />
-                        Import
-                    </button>
-                    <button className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground text-left" onClick={() => handleMobileNavClick(handleExport)}>
-                        <FileDown className="h-5 w-5" />
-                        Export
-                    </button>
-                    <button className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground text-left" onClick={() => handleMobileNavClick('/dashboard/resume-tailor')}>
-                        <ScanText className="h-5 w-5" />
-                        Resume Tailor
-                    </button>
-                    <button className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground text-left" onClick={() => handleMobileNavClick('/dashboard/cv-writer')}>
-                        <FileText className="h-5 w-5" />
-                        CV Writer
-                    </button>
-                    <button className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground text-left" onClick={() => handleMobileNavClick('/dashboard/cover-letter-writer')}>
-                        <StickyNote className="h-5 w-5" />
-                        Cover Letter Writer
-                    </button>
-                </nav>
-            </SheetContent>
-        </Sheet>
-
-        {/* Desktop Nav */}
-        <div className="flex items-center gap-2 text-lg font-semibold">
-          <Logo className="h-6 w-6 text-primary" />
-          <span className="font-headline">JobTrack</span>
-        </div>
+        <SidebarTrigger className="sm:hidden" />
         
         <div className="ml-auto flex items-center gap-2">
             <input
@@ -208,30 +150,14 @@ export default function Header({ applications }: HeaderProps) {
                 onChange={handleImport}
                 className="hidden"
             />
-            {!isMobile && (
-                <>
-                    <Button size="sm" variant="outline" className="h-8 gap-1" onClick={() => router.push('/dashboard/resume-tailor')}>
-                        <ScanText className="h-3.5 w-3.5" />
-                        Resume Tailor
-                    </Button>
-                    <Button size="sm" variant="outline" className="h-8 gap-1" onClick={() => router.push('/dashboard/cover-letter-writer')}>
-                        <StickyNote className="h-3.5 w-3.5" />
-                        Cover Letter
-                    </Button>
-                     <Button size="sm" variant="outline" className="h-8 gap-1" onClick={() => router.push('/dashboard/cv-writer')}>
-                        <FileText className="h-3.5 w-3.5" />
-                        CV Writer
-                    </Button>
-                    <Button size="icon" variant="outline" className="h-8 w-8" onClick={() => fileInputRef.current?.click()}>
-                        <FileUp className="h-4 w-4" />
-                        <span className="sr-only">Import</span>
-                    </Button>
-                    <Button size="icon" variant="outline" className="h-8 w-8" onClick={handleExport}>
-                        <FileDown className="h-4 w-4" />
-                        <span className="sr-only">Export</span>
-                    </Button>
-                </>
-            )}
+            <Button size="icon" variant="outline" className="h-8 w-8" onClick={() => fileInputRef.current?.click()}>
+                <FileUp className="h-4 w-4" />
+                <span className="sr-only">Import</span>
+            </Button>
+            <Button size="icon" variant="outline" className="h-8 w-8" onClick={handleExport}>
+                <FileDown className="h-4 w-4" />
+                <span className="sr-only">Export</span>
+            </Button>
 
             <ThemeToggle />
             <DropdownMenu>
