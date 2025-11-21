@@ -153,44 +153,46 @@ const MobileView = ({ applications, onEdit, selectedIds, setSelectedIds }: Appli
         const lastUpdatedDate = toDate(app.lastUpdated);
         return (
           <Card key={app.id} onClick={() => onEdit(app)} className="cursor-pointer data-[state=selected]:ring-2 data-[state=selected]:ring-primary" data-state={selectedIds.includes(app.id) ? "selected" : "unselected"}>
-            <CardContent className="p-4 flex items-start gap-4">
-              <div onClick={(e) => e.stopPropagation()}>
-                <Checkbox
-                  checked={selectedIds.includes(app.id)}
-                  onCheckedChange={(checked) => {
-                    setSelectedIds(
-                      checked
-                        ? [...selectedIds, app.id]
-                        : selectedIds.filter((id) => id !== app.id)
-                    );
-                  }}
-                  aria-label="Select row"
-                  className="mt-1"
-                />
-              </div>
-              <div className="flex-1 space-y-1">
-                <div className="flex items-center justify-between">
-                    <p className="font-semibold text-foreground truncate">{app.company}</p>
+            <CardContent className="p-4">
+                <div className="flex items-start gap-4">
+                    <div onClick={(e) => e.stopPropagation()}>
+                        <Checkbox
+                        checked={selectedIds.includes(app.id)}
+                        onCheckedChange={(checked) => {
+                            setSelectedIds(
+                            checked
+                                ? [...selectedIds, app.id]
+                                : selectedIds.filter((id) => id !== app.id)
+                            );
+                        }}
+                        aria-label="Select row"
+                        className="mt-1"
+                        />
+                    </div>
+                    <div className="flex-1 space-y-1">
+                        <p className="font-semibold text-foreground truncate">{app.company}</p>
+                        <p className="text-sm text-muted-foreground truncate">{app.role}</p>
+                    </div>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8 -mt-1 -mr-2" onClick={(e) => e.stopPropagation()}>
+                                <MoreHorizontal className="h-4 w-4" />
+                                <span className="sr-only">Toggle menu</span>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
+                            <DropdownMenuItem onSelect={() => onEdit(app)}>Edit</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
+                <div className="flex items-center justify-between mt-4">
                     <Badge className={`border-none text-xs ${statusColors[app.status]}`} variant="outline">
                         {app.status}
                     </Badge>
+                    <p className="text-xs text-muted-foreground">
+                        {lastUpdatedDate ? `Updated ${formatDistanceToNow(lastUpdatedDate, { addSuffix: true })}` : 'N/A'}
+                    </p>
                 </div>
-                <p className="text-sm text-muted-foreground truncate">{app.role}</p>
-                 <p className="text-xs text-muted-foreground pt-1">
-                    {lastUpdatedDate ? `Updated ${formatDistanceToNow(lastUpdatedDate, { addSuffix: true })}` : 'N/A'}
-                </p>
-              </div>
-              <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 -mt-1 -mr-2" onClick={(e) => e.stopPropagation()}>
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Toggle menu</span>
-                      </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
-                      <DropdownMenuItem onSelect={() => onEdit(app)}>Edit</DropdownMenuItem>
-                  </DropdownMenuContent>
-              </DropdownMenu>
             </CardContent>
           </Card>
         );
