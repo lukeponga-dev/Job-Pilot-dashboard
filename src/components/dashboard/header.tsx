@@ -18,7 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -119,6 +119,10 @@ export default function Header({ applications }: HeaderProps) {
                 </Button>
             </SheetTrigger>
             <SheetContent side="left" className="sm:max-w-xs">
+                <SheetHeader>
+                    <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
+                    <SheetDescription className="sr-only">Main navigation links for the JobTrack dashboard.</SheetDescription>
+                </SheetHeader>
                 <nav className="grid gap-6 text-lg font-medium">
                     <Link
                         href="/dashboard"
@@ -154,11 +158,11 @@ export default function Header({ applications }: HeaderProps) {
                 onChange={handleImport}
                 className="hidden"
             />
-            <Button size="sm" variant="outline" className="h-8 gap-1 hidden sm:flex" onClick={() => fileInputRef.current?.click()}>
+            <Button size="sm" variant="outline" className="h-8 gap-1 flex" onClick={() => fileInputRef.current?.click()}>
               <FileUp className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Import</span>
             </Button>
-            <Button size="sm" variant="outline" className="h-8 gap-1 hidden sm:flex" onClick={handleExport}>
+            <Button size="sm" variant="outline" className="h-8 gap-1 flex" onClick={handleExport}>
               <FileDown className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Export</span>
             </Button>
