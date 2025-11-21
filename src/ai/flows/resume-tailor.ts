@@ -10,13 +10,13 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 
-export const ResumeTailorInputSchema = z.object({
+const ResumeTailorInputSchema = z.object({
   resumeText: z.string().min(1, 'Original resume text is required.'),
   jobDescription: z.string().min(1, 'Job description is required.'),
 });
 export type ResumeTailorInput = z.infer<typeof ResumeTailorInputSchema>;
 
-export const ResumeTailorOutputSchema = z.object({
+const ResumeTailorOutputSchema = z.object({
   tailoredResumeText: z.string().describe('The full, tailored resume text in Markdown format.'),
 });
 export type ResumeTailorOutput = z.infer<typeof ResumeTailorOutputSchema>;
