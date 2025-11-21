@@ -79,8 +79,10 @@ export default function AiInsights({ applications }: AiInsightsProps) {
           <div className="space-y-4 pt-4">
             <Alert>
               <AlertTitle className="font-semibold">Personalized Recommendations</AlertTitle>
-              <AlertDescription>
-                {insights.personalizedRecommendations}
+              <AlertDescription asChild>
+                <ul className="list-disc pl-5">
+                  {insights.personalizedRecommendations.split('\n').map((rec, i) => rec && <li key={i}>{rec.replace(/^- /, '')}</li>)}
+                </ul>
               </AlertDescription>
             </Alert>
              <Card>

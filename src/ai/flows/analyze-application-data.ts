@@ -29,14 +29,6 @@ const AnalyzeApplicationDataOutputSchema = z.object({
   overallSuccessRate: z
     .number()
     .describe('The overall success rate across all applications.'),
-  roleSuccessRates: z.record(
-    z.string(),
-    z.number()
-  ).describe('Success rates broken down by role.'),
-  companySuccessRates: z.record(
-    z.string(),
-    z.number()
-  ).describe('Success rates broken down by company.'),
   optimalApplicationTiming: z
     .string()
     .describe('The optimal time to apply for jobs based on the data.'),
@@ -69,8 +61,6 @@ Job Application Data: {{{jobData}}}
 Provide the following analysis:
 
 - Overall Success Rate: The overall success rate across all applications.
-- Role Success Rates: Success rates broken down by role.
-- Company Success Rates: Success rates broken down by company.
 - Optimal Application Timing: The optimal time to apply for jobs based on the data.
 - Personalized Recommendations: Personalized recommendations for improving the application strategy.
 `,
