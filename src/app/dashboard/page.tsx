@@ -75,8 +75,7 @@ export default function DashboardPage() {
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <div className="flex flex-col sm:gap-4 sm:py-4">
         <Header applications={applications || []} />
-        <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-          <div className="grid auto-rows-max items-start gap-4 md:gap-8">
+        <main className="flex flex-1 flex-col gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
             <SummaryCards applications={applications || []} />
             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
               <h2 className="text-xl font-headline font-semibold">Applications</h2>
@@ -94,7 +93,7 @@ export default function DashboardPage() {
                 </Select>
                 <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
                   <SheetTrigger asChild>
-                    <Button size="sm" className="h-8 gap-1">
+                    <Button size="sm" className="h-8 gap-1" onClick={handleAddApplication}>
                       <PlusCircle className="h-3.5 w-3.5" />
                       <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                         Add Application
@@ -120,12 +119,11 @@ export default function DashboardPage() {
             ) : (
               <ApplicationsTable applications={filteredApplications} onEdit={handleEditApplication} />
             )}
-          </div>
-          <div className="grid auto-rows-max items-start gap-4 md:gap-8">
-            <StatusChart applications={applications || []} />
-            <Reminders reminders={reminders || []} applications={applications || []} />
-            <AiInsights applications={applications || []} />
-          </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+                <StatusChart applications={applications || []} />
+                <Reminders reminders={reminders || []} applications={applications || []} />
+                <AiInsights applications={applications || []} />
+            </div>
         </main>
       </div>
     </div>
