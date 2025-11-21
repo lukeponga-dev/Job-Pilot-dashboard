@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FileDown, FileUp, LogOut, PanelLeft } from 'lucide-react';
+import { FileDown, FileUp, LogOut, PanelLeft, FileText } from 'lucide-react';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Papa from 'papaparse';
@@ -26,6 +26,7 @@ import { Logo } from '@/components/icons';
 import { useAuth, useUser, useFirestore, addDocumentNonBlocking } from '@/firebase';
 import type { JobApplication } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
+import { useMobile } from '@/hooks/use-mobile';
 
 
 type HeaderProps = {
@@ -40,6 +41,7 @@ export default function Header({ applications }: HeaderProps) {
   const { toast } = useToast();
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isMobile = useMobile();
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -103,8 +105,12 @@ export default function Header({ applications }: HeaderProps) {
     }
   };
 
-  const handleMobileNavClick = (action: () => void) => {
-    action();
+  const handleMobileNavClick = (action: (() => void) | string) => {
+    if (typeof action === 'string') {
+        router.push(action);
+    } else {
+        action();
+    }
     setIsMobileMenuOpen(false);
   }
 
@@ -119,9 +125,9 @@ export default function Header({ applications }: HeaderProps) {
                 </Button>
             </SheetTrigger>
             <SheetContent side="left" className="sm:max-w-xs">
-                <SheetHeader className="sr-only">
-                    <SheetTitle>Mobile Menu</SheetTitle>
-                    <SheetDescription>Main navigation and actions for the dashboard.</SheetDescription>
+                <SheetHeader>
+                    <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
+                    <SheetDescription className="sr-only">Main navigation and actions for the dashboard.</SheetDescription>
                 </SheetHeader>
                 <nav className="grid gap-6 text-lg font-medium mt-8">
                     <Link
@@ -132,14 +138,18 @@ export default function Header({ applications }: HeaderProps) {
                         <Logo className="h-5 w-5 transition-all group-hover:scale-110" />
                         <span className="sr-only">JobTrack</span>
                     </Link>
-                    <Link href="#" className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground" onClick={() => handleMobileNavClick(() => fileInputRef.current?.click())}>
+                    <button className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground text-left" onClick={() => handleMobileNavClick(() => fileInputRef.current?.click())}>
                         <FileUp className="h-5 w-5" />
                         Import
-                    </Link>
-                    <Link href="#" className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground" onClick={() => handleMobileNavClick(handleExport)}>
+                    </button>
+                    <button className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground text-left" onClick={() => handleMobileNavClick(handleExport)}>
                         <FileDown className="h-5 w-5" />
                         Export
-                    </Link>
+                    </button>
+                    <button className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground text-left" onClick={() => handleMobileNavClick('/dashboard/cv-writer')}>
+                        <FileText className="h-5 w-5" />
+                        CV Writer
+                    </button>
                 </nav>
             </SheetContent>
         </Sheet>
@@ -158,14 +168,23 @@ export default function Header({ applications }: HeaderProps) {
                 onChange={handleImport}
                 className="hidden"
             />
-            <Button size="icon" variant="outline" className="h-8 w-8 hidden sm:inline-flex" onClick={() => fileInputRef.current?.click()}>
-              <FileUp className="h-4 w-4" />
-              <span className="sr-only">Import</span>
-            </Button>
-            <Button size="icon" variant="outline" className="h-8 w-8 hidden sm:inline-flex" onClick={handleExport}>
-              <FileDown className="h-4 w-4" />
-              <span className="sr-only">Export</span>
-            </Button>
+            {!isMobile && (
+                <>
+                    <Button size="sm" variant="outline" className="h-8 gap-1" onClick={() => router.push('/dashboard/cv-writer')}>
+                        <FileText className="h-3.5 w-3.5" />
+                        CV Writer
+                    </Button>
+                    <Button size="icon" variant="outline" className="h-8 w-8" onClick={() => fileInputRef.current?.click()}>
+                        <FileUp className="h-4 w-4" />
+                        <span className="sr-only">Import</span>
+                    </Button>
+                    <Button size="icon" variant="outline" className="h-8 w-8" onClick={handleExport}>
+                        <FileDown className="h-4 w-4" />
+                        <span className="sr-only">Export</span>
+                    </Button>
+                </>
+            )}
+
             <ThemeToggle />
             <DropdownMenu>
             <DropdownMenuTrigger asChild>
