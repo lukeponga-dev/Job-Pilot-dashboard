@@ -9,11 +9,8 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
+import { ResumeTailorInputSchema } from '@/app/dashboard/resume-tailor/page';
 
-const ResumeTailorInputSchema = z.object({
-  resumeText: z.string().min(1, 'Original resume text is required.'),
-  jobDescription: z.string().min(1, 'Job description is required.'),
-});
 export type ResumeTailorInput = z.infer<typeof ResumeTailorInputSchema>;
 
 const ResumeTailorOutputSchema = z.object({

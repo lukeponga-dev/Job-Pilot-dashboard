@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { Loader2, Wand2, ScanText } from 'lucide-react';
 import Link from 'next/link';
 
@@ -11,8 +12,13 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { tailorResume, ResumeTailorInputSchema } from '@/ai/flows/resume-tailor';
+import { tailorResume } from '@/ai/flows/resume-tailor';
 import type { ResumeTailorInput } from '@/ai/flows/resume-tailor';
+
+export const ResumeTailorInputSchema = z.object({
+  resumeText: z.string().min(1, 'Original resume text is required.'),
+  jobDescription: z.string().min(1, 'Job description is required.'),
+});
 
 const ResumeTailorPage = () => {
   const { toast } = useToast();
