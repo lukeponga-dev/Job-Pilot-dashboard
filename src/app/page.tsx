@@ -13,17 +13,6 @@ export default function HomePage() {
                         <Briefcase className="h-8 w-8 text-blue-600 dark:text-blue-400" />
                         <span className="text-2xl font-bold text-gray-900 dark:text-white">Job Pilot</span>
                     </div>
-                    <nav className="hidden md:flex items-center space-x-6">
-                        <Link href="#features" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors font-medium">
-                            Features
-                        </Link>
-                        <Link href="#about" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors font-medium">
-                            About
-                        </Link>
-                        <Link href="#pricing" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors font-medium">
-                            Pricing
-                        </Link>
-                    </nav>
                     <nav className="flex items-center space-x-4">
                         <Link
                             href="/login"
