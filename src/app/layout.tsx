@@ -4,7 +4,7 @@ import { Providers } from '@/components/providers';
 import { FirebaseClientProvider } from '@/firebase';
 
 export const metadata: Metadata = {
-  title: 'Job Pilot - Job Application Tracker',
+  title: 'JobTrack - Job Application Tracker',
   description: 'A secure, responsive dashboard to track job applications.',
   icons: {
     icon: '/favicon.ico',

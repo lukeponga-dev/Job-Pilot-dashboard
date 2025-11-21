@@ -1,4 +1,5 @@
-# Job Pilot – Job Application Tracker
+
+# JobTrack – Job Application Tracker
 
 A secure, responsive dashboard to track job applications with authentication, real-time updates, analytics, and reminders. Built with **Next.js**, **Firebase**, and **Tailwind CSS**.
 
@@ -32,8 +33,8 @@ A secure, responsive dashboard to track job applications with authentication, re
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/your-username/job-pilot.git
-cd job-pilot
+git clone https://github.com/your-username/job-track.git
+cd job-track
 ```
 
 ### 2. Install Dependencies
@@ -92,19 +93,41 @@ service cloud.firestore {
       return isSignedIn() && request.auth.uid == userId;
     }
 
+    function isValidUserCreate(userId) {
+      return request.resource.data.id == userId;
+    }
+
+    function isUserRecordImmutable() {
+      return request.resource.data.id == resource.data.id;
+    }
+    
+    function isValidSubcollectionCreate(userId) {
+      return request.resource.data.userId == userId;
+    }
+
+    function isSubcollectionRecordImmutable() {
+      return request.resource.data.userId == resource.data.userId;
+    }
+
     match /users/{userId} {
       allow get: if isOwner(userId);
-      allow list: if false; // Prevent user enumeration
-      allow create: if isOwner(userId);
-      allow update: if isOwner(userId);
-      allow delete: if false; // Deletions should be handled by a trusted process
+      allow list: if false;
+      allow create: if isOwner(userId) && isValidUserCreate(userId);
+      allow update: if isOwner(userId) && isUserRecordImmutable();
+      allow delete: if false;
 
       match /jobApplications/{jobApplicationId} {
-        allow read, list, create, update, delete: if isOwner(userId);
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidSubcollectionCreate(userId);
+        allow update: if isOwner(userId) && isSubcollectionRecordImmutable();
+        allow delete: if isOwner(userId);
       }
 
       match /reminders/{reminderId} {
-        allow read, list, create, update, delete: if isOwner(userId);
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidSubcollectionCreate(userId);
+        allow update: if isOwner(userId) && isSubcollectionRecordImmutable();
+        allow delete: if isOwner(userId);
       }
     }
   }
