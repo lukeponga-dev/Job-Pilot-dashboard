@@ -18,7 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -120,10 +120,12 @@ export default function Header({ applications }: HeaderProps) {
             </SheetTrigger>
             <SheetContent side="left" className="sm:max-w-xs">
                 <SheetHeader>
-                    <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
-                    <SheetDescription className="sr-only">Main navigation links for the JobTrack dashboard.</SheetDescription>
+                  <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
+                  <SheetDescription className="sr-only">
+                    Main navigation links for the JobTrack dashboard, including import and export actions.
+                  </SheetDescription>
                 </SheetHeader>
-                <nav className="grid gap-6 text-lg font-medium">
+                <nav className="grid gap-6 text-lg font-medium mt-8">
                     <Link
                         href="/dashboard"
                         className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
@@ -158,13 +160,13 @@ export default function Header({ applications }: HeaderProps) {
                 onChange={handleImport}
                 className="hidden"
             />
-            <Button size="sm" variant="outline" className="h-8 gap-1 flex" onClick={() => fileInputRef.current?.click()}>
-              <FileUp className="h-3.5 w-3.5" />
-              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Import</span>
+            <Button size="icon" variant="outline" className="h-8 w-8" onClick={() => fileInputRef.current?.click()}>
+              <FileUp className="h-4 w-4" />
+              <span className="sr-only">Import</span>
             </Button>
-            <Button size="sm" variant="outline" className="h-8 gap-1 flex" onClick={handleExport}>
-              <FileDown className="h-3.5 w-3.5" />
-              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Export</span>
+            <Button size="icon" variant="outline" className="h-8 w-8" onClick={handleExport}>
+              <FileDown className="h-4 w-4" />
+              <span className="sr-only">Export</span>
             </Button>
             <ThemeToggle />
             <DropdownMenu>

@@ -118,39 +118,40 @@ const DesktopView = ({ applications, onEdit }: ApplicationsTableProps) => (
 
 const MobileView = ({ applications, onEdit }: ApplicationsTableProps) => (
     <div className="grid gap-4">
-        {applications.map((app) => {
-            const lastUpdatedDate = toDate(app.lastUpdated);
-            return (
-                <Card key={app.id} onClick={() => onEdit(app)} className="cursor-pointer">
-                    <CardHeader>
-                        <div className="flex items-center justify-between">
-                            <CardTitle className="text-lg font-bold">{app.company}</CardTitle>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" size="icon" onClick={(e) => e.stopPropagation()}>
-                                        <MoreHorizontal className="h-4 w-4" />
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
-                                    <DropdownMenuItem onSelect={() => onEdit(app)}>Edit</DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </div>
-                        <CardDescription>{app.role}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="flex justify-between items-center">
-                        <Badge className={`border-none ${statusColors[app.status]}`} variant="outline">
-                            {app.status}
-                        </Badge>
-                        <p className="text-sm text-muted-foreground">
-                            {lastUpdatedDate ? formatDistanceToNow(lastUpdatedDate, { addSuffix: true }) : 'N/A'}
-                        </p>
-                    </CardContent>
-                </Card>
-            );
-        })}
+      {applications.map((app) => {
+        const lastUpdatedDate = toDate(app.lastUpdated);
+        return (
+          <Card key={app.id} onClick={() => onEdit(app)} className="cursor-pointer">
+            <CardContent className="p-4 flex items-center gap-4">
+              <div className="flex-1">
+                <p className="font-semibold text-foreground truncate">{app.company}</p>
+                <p className="text-sm text-muted-foreground truncate">{app.role}</p>
+                 <p className="text-xs text-muted-foreground pt-2">
+                    {lastUpdatedDate ? formatDistanceToNow(lastUpdatedDate, { addSuffix: true }) : 'N/A'}
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <Badge className={`border-none ${statusColors[app.status]}`} variant="outline">
+                    {app.status}
+                </Badge>
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" onClick={(e) => e.stopPropagation()}>
+                            <MoreHorizontal className="h-4 w-4" />
+                            <span className="sr-only">Toggle menu</span>
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
+                        <DropdownMenuItem onSelect={() => onEdit(app)}>Edit</DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      })}
     </div>
-);
+  );
 
 export default function ApplicationsTable({ applications, onEdit }: ApplicationsTableProps) {
   const isMobile = useMobile();
