@@ -1,0 +1,36 @@
+# Blueprint for deploying the JobTrack Pro application on Render.
+# This file defines the services, build commands, start commands,
+# and environment variables required for a successful deployment.
+
+services:
+  - type: web
+    name: jobtrack-pro
+    env: node
+    # The 'free' plan is suitable for development and hobby projects.
+    # For production use, consider upgrading to a paid plan for more resources.
+    plan: free
+    # Specifies the commands to build the application.
+    # It first installs dependencies and then runs the Next.js production build.
+    buildCommand: npm install && npm run build
+    # The command to start the web service after a successful build.
+    startCommand: npm start
+    # Defines environment variables required by the application.
+    # These should be created as 'Secret Files' in your Render dashboard
+    # to keep sensitive information secure.
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_FIREBASE_API_KEY
+        fromSecret: true
+      - key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+        fromSecret: true
+      - key: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+        fromSecret: true
+      - key: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+        fromSecret: true
+      - key: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+        fromSecret: true
+      - key: NEXT_PUBLIC_FIREBASE_APP_ID
+        fromSecret: true
+      - key: GEMINI_API_KEY
+        fromSecret: true
