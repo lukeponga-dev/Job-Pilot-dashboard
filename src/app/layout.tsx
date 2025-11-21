@@ -10,6 +10,7 @@ import { FirebaseClientProvider } from '@/firebase';
 
 const fontSans = FontSans({ subsets: ['latin'], variable: '--font-sans' });
 
+
 export const metadata: Metadata = {
   title: 'JobTrack - Job Application Tracker',
   description: 'A secure, responsive dashboard to track job applications.',
@@ -27,6 +28,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Calistoga&display=swap" rel="stylesheet" />
         <meta name="theme-color" content="#000000" />
       </head>
       <body className={cn('font-sans antialiased', fontSans.variable)}>

@@ -1,13 +1,14 @@
+'use server';
 import type { User as FirebaseUser } from 'firebase/auth';
 
 export type User = FirebaseUser;
 
 export const JOB_STATUSES = [
   'Applied',
+  'Viewed',
   'Interviewing',
   'Offer',
   'Rejected',
-  'Viewed',
   'Not selected',
   'Expired',
   'Unlikely to progress',
@@ -23,7 +24,7 @@ export type JobApplication = {
   url: string;
   status: JobStatus;
   dateApplied: string;
-  lastUpdated: string;
+  lastUpdated: any;
   location?: string;
   notes?: string;
 };
