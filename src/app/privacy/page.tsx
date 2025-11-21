@@ -19,7 +19,7 @@ export default function PrivacyPolicy() {
       <main className="flex-1 container px-4 md:px-6 py-12">
         <div className="bg-card rounded-lg shadow-lg p-8">
           <h1 className="text-3xl font-bold text-foreground mb-6">Privacy Policy</h1>
-          <p className="text-sm text-muted-foreground mb-8">Last updated: November 22, 2025</p>
+          <p className="text-sm text-muted-foreground mb-8">Last updated: July 29, 2024</p>
 
           <div className="space-y-6 text-muted-foreground">
             <section>

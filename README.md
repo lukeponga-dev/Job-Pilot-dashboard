@@ -133,3 +133,9 @@ service cloud.firestore {
   }
 }
 ```
+
+## ✅ License, Terms, and Privacy
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+By using this application, you agree to our [Terms of Use](/terms) and [Privacy Policy](/privacy).

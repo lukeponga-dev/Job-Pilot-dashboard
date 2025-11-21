@@ -19,7 +19,7 @@ export default function TermsOfService() {
       <main className="flex-1 container px-4 md:px-6 py-12">
         <div className="bg-card rounded-lg shadow-lg p-8">
           <h1 className="text-3xl font-bold text-foreground mb-6">Terms of Service</h1>
-          <p className="text-sm text-muted-foreground mb-8">Last updated: November 21, 2024</p>
+          <p className="text-sm text-muted-foreground mb-8">Last updated: July 29, 2024</p>
 
           <div className="space-y-6 text-muted-foreground">
             <section>
@@ -104,7 +104,7 @@ export default function TermsOfService() {
             <section>
               <h2 className="text-xl font-semibold mb-3 text-foreground">11. Contact Information</h2>
               <p>
-                For questions about these Terms of Service, please contact us at <span class="font-semibold">terms@jobtrack.com</span>.
+                For questions about these Terms of Service, please contact us at <span className="font-semibold">terms@jobtrack.com</span>.
               </p>
             </section>
           </div>

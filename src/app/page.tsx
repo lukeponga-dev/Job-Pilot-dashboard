@@ -7,22 +7,33 @@ export default function HomePage() {
     return (
         <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
             {/* Header */}
-            <header className="border-b bg-white/80 backdrop-blur-sm dark:bg-gray-900/80 dark:border-gray-800">
+            <header className="sticky top-0 z-50 border-b bg-white/80 backdrop-blur-sm dark:bg-gray-900/80 dark:border-gray-800">
                 <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                     <div className="flex items-center space-x-2">
                         <Briefcase className="h-8 w-8 text-blue-600 dark:text-blue-400" />
                         <span className="text-2xl font-bold text-gray-900 dark:text-white">Job Pilot</span>
                     </div>
+                    <nav className="hidden md:flex items-center space-x-6">
+                        <Link href="#features" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors font-medium">
+                            Features
+                        </Link>
+                        <Link href="#about" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors font-medium">
+                            About
+                        </Link>
+                        <Link href="#pricing" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors font-medium">
+                            Pricing
+                        </Link>
+                    </nav>
                     <nav className="flex items-center space-x-4">
                         <Link
                             href="/login"
-                            className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors"
+                            className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors font-medium"
                         >
                             Sign In
                         </Link>
                         <Link
                             href="/signup"
-                            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
                         >
                             Get Started
                         </Link>
@@ -31,7 +42,7 @@ export default function HomePage() {
             </header>
 
             {/* Hero Section */}
-            <section className="container mx-auto px-4 py-20 text-center">
+            <section id="hero" className="container mx-auto px-4 py-20 text-center">
                 <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
                     Track Your Job Search
                     <br />
@@ -58,7 +69,7 @@ export default function HomePage() {
             </section>
 
             {/* Features Grid */}
-            <section className="container mx-auto px-4 py-20">
+            <section id="features" className="container mx-auto px-4 py-20">
                 <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
                     Everything You Need to Succeed
                 </h2>
@@ -108,7 +119,7 @@ export default function HomePage() {
             </section>
 
             {/* Stats Section */}
-            <section className="bg-blue-600 dark:bg-blue-700 py-16">
+            <section id="about" className="bg-blue-600 dark:bg-blue-700 py-16">
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-3 gap-8 text-center text-white">
                         <div>
@@ -137,7 +148,7 @@ export default function HomePage() {
             </section>
 
             {/* CTA Section */}
-            <section className="container mx-auto px-4 py-20 text-center">
+            <section id="pricing" className="container mx-auto px-4 py-20 text-center">
                 <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
                     Ready to Take Control of Your Job Search?
                 </h2>
