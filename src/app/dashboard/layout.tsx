@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import AuthGuard from '@/components/auth-guard';
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from '@/components/ui/sidebar';
 import Link from 'next/link';
-import { Briefcase, FileText, ScanText, StickyNote, Home } from 'lucide-react';
+import { Briefcase, FileText, ScanText, StickyNote, Home, ExternalLink } from 'lucide-react';
 import Header from '@/components/dashboard/header';
 import { useUser } from '@/firebase';
 
@@ -56,7 +56,16 @@ function DashboardSidebar() {
                 </SidebarMenu>
             </SidebarContent>
             <SidebarFooter>
-                {/* Can be used for user profile link or other footer items */}
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton asChild>
+                            <Link href="/" target="_blank">
+                                <ExternalLink />
+                                <span>View Home Page</span>
+                            </Link>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                </SidebarMenu>
             </SidebarFooter>
         </Sidebar>
     )
