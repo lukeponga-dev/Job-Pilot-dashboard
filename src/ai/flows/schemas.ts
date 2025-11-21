@@ -6,6 +6,18 @@ export const ExtractApplicationInputSchema = z.object({
   emailContent: z.string().min(1, 'Email content is required.'),
 });
 
+export const ExtractApplicationOutputSchema = z.object({
+  company: z.string().describe('The name of the company.'),
+  role: z.string().describe('The job title or role.'),
+  location: z.string().optional().describe('The location of the job.'),
+  status: z
+    .string()
+    .describe(
+      'The current status of the application. Default to "Applied" if a confirmation email, or "Viewed" if it seems like a job suggestion.'
+    ),
+  url: z.string().optional().describe('The URL for the job posting, if found.'),
+});
+
 const ExperienceSchema = z.object({
     role: z.string(),
     company: z.string(),

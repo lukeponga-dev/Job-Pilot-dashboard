@@ -9,21 +9,9 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
-import { ExtractApplicationInputSchema } from './schemas';
+import { ExtractApplicationInputSchema, ExtractApplicationOutputSchema } from './schemas';
 
 export type ExtractApplicationInput = z.infer<typeof ExtractApplicationInputSchema>;
-
-export const ExtractApplicationOutputSchema = z.object({
-  company: z.string().describe('The name of the company.'),
-  role: z.string().describe('The job title or role.'),
-  location: z.string().optional().describe('The location of the job.'),
-  status: z
-    .string()
-    .describe(
-      'The current status of the application. Default to "Applied" if a confirmation email, or "Viewed" if it seems like a job suggestion.'
-    ),
-  url: z.string().optional().describe('The URL for the job posting, if found.'),
-});
 export type ExtractApplicationOutput = z.infer<
   typeof ExtractApplicationOutputSchema
 >;
