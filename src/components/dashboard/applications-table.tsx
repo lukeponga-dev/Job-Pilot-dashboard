@@ -82,19 +82,19 @@ const DesktopView = ({ applications, onEdit }: ApplicationsTableProps) => (
                 const lastUpdatedDate = toDate(app.lastUpdated);
                 return (
                     <TableRow key={app.id} className="cursor-pointer" onClick={() => onEdit(app)}>
-                        <TableCell>
+                        <TableCell className="py-2">
                             <div className="font-medium">{app.company}</div>
                         </TableCell>
-                        <TableCell>{app.role}</TableCell>
-                        <TableCell>
+                        <TableCell className="py-2">{app.role}</TableCell>
+                        <TableCell className="py-2">
                             <Badge className={`border-none ${statusColors[app.status]}`} variant="outline">
                                 {app.status}
                             </Badge>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="py-2">
                             {lastUpdatedDate ? formatDistanceToNow(lastUpdatedDate, { addSuffix: true }) : 'N/A'}
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="py-2">
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                 <Button aria-haspopup="true" size="icon" variant="ghost">
