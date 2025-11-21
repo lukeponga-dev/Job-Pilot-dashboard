@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Loader2, Wand2, FileText } from 'lucide-react';
-import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -14,8 +13,9 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { useUser } from '@/firebase';
-import { CoverLetterWriterInputSchema, generateCoverLetter } from '@/ai/flows/cover-letter-writer';
-import type { CoverLetterWriterInput } from '@/ai/flows/cover-letter-writer';
+import { generateCoverLetter } from '@/ai/flows/cover-letter-writer';
+import { CoverLetterWriterInputSchema } from '@/ai/flows/schemas';
+import type { CoverLetterWriterInput } from '@/ai/flows/schemas';
 
 const CoverLetterWriterPage = () => {
   const { toast } = useToast();

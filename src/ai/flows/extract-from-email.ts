@@ -13,7 +13,7 @@ import { ExtractApplicationInputSchema } from './schemas';
 
 export type ExtractApplicationInput = z.infer<typeof ExtractApplicationInputSchema>;
 
-const ExtractApplicationOutputSchema = z.object({
+export const ExtractApplicationOutputSchema = z.object({
   company: z.string().describe('The name of the company.'),
   role: z.string().describe('The job title or role.'),
   location: z.string().optional().describe('The location of the job.'),

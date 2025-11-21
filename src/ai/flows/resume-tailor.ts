@@ -10,10 +10,9 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 import { ResumeTailorInputSchema } from '@/app/dashboard/resume-tailor/page';
+import type { ResumeTailorInput } from '@/app/dashboard/resume-tailor/page';
 
-export type ResumeTailorInput = z.infer<typeof ResumeTailorInputSchema>;
-
-const ResumeTailorOutputSchema = z.object({
+export const ResumeTailorOutputSchema = z.object({
   tailoredResumeText: z.string().describe('The full, tailored resume text in Markdown format.'),
 });
 export type ResumeTailorOutput = z.infer<typeof ResumeTailorOutputSchema>;

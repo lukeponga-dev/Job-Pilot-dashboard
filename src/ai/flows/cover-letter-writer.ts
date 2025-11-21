@@ -9,21 +9,8 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
-
-export const CoverLetterWriterInputSchema = z.object({
-  fullName: z.string().min(1, 'Full name is required.'),
-  jobRole: z.string().min(1, 'Job role is required.'),
-  companyName: z.string().min(1, 'Company name is required.'),
-  jobDescription: z.string().min(1, 'Job description is required.'),
-  userExperience: z.string().min(1, 'Please describe your relevant experience.'),
-});
-
-export type CoverLetterWriterInput = z.infer<typeof CoverLetterWriterInputSchema>;
-
-export const CoverLetterWriterOutputSchema = z.object({
-  coverLetterText: z.string().describe('The full, formatted cover letter text in Markdown format.'),
-});
-export type CoverLetterWriterOutput = z.infer<typeof CoverLetterWriterOutputSchema>;
+import { CoverLetterWriterInputSchema, CoverLetterWriterOutputSchema } from './schemas';
+import type { CoverLetterWriterInput, CoverLetterWriterOutput } from './schemas';
 
 const coverLetterWriterFlow = ai.defineFlow(
   {

@@ -3,9 +3,7 @@
 import { useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { PlusCircle, Trash, Loader2, Wand2 } from 'lucide-react';
-import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -13,8 +11,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { CvWriterInputSchema, generateCv } from '@/ai/flows/cv-writer';
-import type { CvWriterInput } from '@/ai/flows/cv-writer';
+import { generateCv } from '@/ai/flows/cv-writer';
+import { CvWriterInputSchema } from '@/ai/flows/schemas';
+import type { CvWriterInput } from '@/ai/flows/schemas';
 
 const CvWriterPage = () => {
   const { toast } = useToast();
