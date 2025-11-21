@@ -62,7 +62,7 @@ export const seedApplications: Omit<JobApplication, 'id' | 'userId' | 'lastUpdat
         role: 'General Fitter',
         location: 'Hamilton, Waikato',
         dateApplied: '2025-10-30',
-        status: 'Viewed',
+        status: 'Applied',
         url: ''
     },
     {
@@ -78,7 +78,7 @@ export const seedApplications: Omit<JobApplication, 'id' | 'userId' | 'lastUpdat
         role: 'Customer Experience Agent (Overnight)',
         location: 'Wellington City, Wellington',
         dateApplied: '2025-10-25',
-        status: 'Not selected',
+        status: 'Rejected',
         url: ''
     },
     {
@@ -86,7 +86,7 @@ export const seedApplications: Omit<JobApplication, 'id' | 'userId' | 'lastUpdat
         role: 'Service Desk Analyst (Evening shifts)',
         location: 'Wellington City, Wellington',
         dateApplied: '2025-10-25',
-        status: 'Not selected',
+        status: 'Rejected',
         url: ''
     },
     {
@@ -94,7 +94,7 @@ export const seedApplications: Omit<JobApplication, 'id' | 'userId' | 'lastUpdat
         role: 'IT Network Engineer',
         location: 'Wellington City, Wellington',
         dateApplied: '2025-10-03',
-        status: 'Not selected',
+        status: 'Rejected',
         url: ''
     },
     {
@@ -110,7 +110,7 @@ export const seedApplications: Omit<JobApplication, 'id' | 'userId' | 'lastUpdat
         role: 'IT Support Specialist',
         location: 'Masterton 5810',
         dateApplied: '2025-10-20',
-        status: 'Not selected',
+        status: 'Rejected',
         url: ''
     },
     {
@@ -126,7 +126,7 @@ export const seedApplications: Omit<JobApplication, 'id' | 'userId' | 'lastUpdat
         role: 'IT Support Engineer',
         location: 'Hamilton Lake, Waikato',
         dateApplied: '2025-10-26',
-        status: 'Expired',
+        status: 'Rejected',
         url: ''
     },
     {
@@ -134,7 +134,7 @@ export const seedApplications: Omit<JobApplication, 'id' | 'userId' | 'lastUpdat
         role: 'Support Engineer',
         location: 'Hamilton Central, Waikato',
         dateApplied: '2025-11-01',
-        status: 'Unlikely to progress',
+        status: 'Rejected',
         url: ''
     },
     {
@@ -142,7 +142,7 @@ export const seedApplications: Omit<JobApplication, 'id' | 'userId' | 'lastUpdat
         role: 'IT Operations Support Lead',
         location: 'Wellington Central, Wellington',
         dateApplied: '2025-10-25',
-        status: 'Expired',
+        status: 'Rejected',
         url: ''
     },
     {
@@ -150,7 +150,7 @@ export const seedApplications: Omit<JobApplication, 'id' | 'userId' | 'lastUpdat
         role: 'Level 1 Helpdesk Technician',
         location: 'Johnsonville, Wellington',
         dateApplied: '2025-11-13',
-        status: 'Expired',
+        status: 'Rejected',
         url: ''
     },
     {
@@ -158,7 +158,7 @@ export const seedApplications: Omit<JobApplication, 'id' | 'userId' | 'lastUpdat
         role: 'Student Systems Analyst',
         location: 'Hamilton East, Waikato',
         dateApplied: '2025-10-20',
-        status: 'Expired',
+        status: 'Rejected',
         url: ''
     },
     {
@@ -166,7 +166,7 @@ export const seedApplications: Omit<JobApplication, 'id' | 'userId' | 'lastUpdat
         role: 'Packing & Production Team Member',
         location: 'Te Rapa, Waikato',
         dateApplied: '2025-10-25',
-        status: 'Unlikely to progress',
+        status: 'Rejected',
         url: ''
     },
     {
@@ -174,7 +174,7 @@ export const seedApplications: Omit<JobApplication, 'id' | 'userId' | 'lastUpdat
         role: 'Support Analyst',
         location: 'Hamilton Central, Waikato',
         dateApplied: '2025-10-12',
-        status: 'Expired',
+        status: 'Rejected',
         url: ''
     },
     {
@@ -182,7 +182,7 @@ export const seedApplications: Omit<JobApplication, 'id' | 'userId' | 'lastUpdat
         role: 'Part Time Retail Assistant',
         location: 'Hamilton, Waikato',
         dateApplied: '2025-10-10',
-        status: 'Expired',
+        status: 'Rejected',
         url: ''
     },
     {
@@ -190,7 +190,7 @@ export const seedApplications: Omit<JobApplication, 'id' | 'userId' | 'lastUpdat
         role: 'Helpdesk Support Engineer',
         location: 'Hamilton Central, Waikato',
         dateApplied: '2025-10-05',
-        status: 'Unlikely to progress',
+        status: 'Rejected',
         url: ''
     },
     {
@@ -198,7 +198,7 @@ export const seedApplications: Omit<JobApplication, 'id' | 'userId' | 'lastUpdat
         role: 'Technology Sales Consultant',
         location: 'Hamilton Central, Waikato',
         dateApplied: '2025-10-02',
-        status: 'Expired',
+        status: 'Rejected',
         url: ''
     },
     {
@@ -206,7 +206,7 @@ export const seedApplications: Omit<JobApplication, 'id' | 'userId' | 'lastUpdat
         role: 'Front of House',
         location: 'Hamilton Central, Waikato',
         dateApplied: '2025-10-02',
-        status: 'Expired',
+        status: 'Rejected',
         url: ''
     }
   ];
