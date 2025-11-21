@@ -63,7 +63,7 @@ export default function AiInsights({ applications }: AiInsightsProps) {
     <Card className="w-full">
       <CardHeader>
         <CardTitle className="font-headline">AI Insights</CardTitle>
-        <CardDescription>Analyze your strategy and get recommendations.</CardDescription>
+        <CardDescription>Analyze your job search strategy.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <Button onClick={handleAnalysis} disabled={loading || applications.length === 0} className="w-full">

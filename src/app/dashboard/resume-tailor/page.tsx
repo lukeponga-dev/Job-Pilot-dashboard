@@ -55,65 +55,63 @@ const ResumeTailorPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40">
-      <main className="flex-1 p-4 sm:p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>Resume & Job Details</CardTitle>
-              <CardDescription>Paste your resume and the job description below.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                  <FormField name="resumeText" control={form.control} render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Your Current Resume</FormLabel>
-                      <FormControl><Textarea placeholder="Paste your full resume text here..." rows={12} {...field} /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-                  <FormField name="jobDescription" control={form.control} render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Target Job Description</FormLabel>
-                      <FormControl><Textarea placeholder="Paste the job description you are applying for..." rows={12} {...field} /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-                  <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
-                    Tailor Resume
-                  </Button>
-                </form>
-              </Form>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Tailored Resume</CardTitle>
-              <CardDescription>Your AI-tailored resume will appear here.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {loading && (
-                <div className="flex justify-center items-center h-full">
-                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                </div>
-              )}
-              {tailoredResume && (
-                <div className="prose dark:prose-invert max-w-none p-4 border rounded-md bg-secondary/50">
-                  <pre className="whitespace-pre-wrap font-sans text-sm">{tailoredResume}</pre>
-                </div>
-              )}
-              {!loading && !tailoredResume && (
-                <div className="flex justify-center items-center h-64 text-muted-foreground text-center">
-                  <p>Your tailored resume will be displayed here once you submit the form.</p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-      </main>
-    </div>
+    <main className="flex-1 p-4 sm:p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <Card>
+          <CardHeader>
+            <CardTitle className='font-headline'>Resume & Job Details</CardTitle>
+            <CardDescription>Paste your resume and the job description below.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField name="resumeText" control={form.control} render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Your Current Resume</FormLabel>
+                    <FormControl><Textarea placeholder="Paste your full resume text here..." rows={12} {...field} /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )} />
+                <FormField name="jobDescription" control={form.control} render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Target Job Description</FormLabel>
+                    <FormControl><Textarea placeholder="Paste the job description you are applying for..." rows={12} {...field} /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )} />
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
+                  Tailor Resume
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className='font-headline'>Tailored Resume</CardTitle>
+            <CardDescription>Your AI-tailored resume will appear here.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {loading && (
+              <div className="flex justify-center items-center h-full">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              </div>
+            )}
+            {tailoredResume && (
+              <div className="prose dark:prose-invert max-w-none p-4 border rounded-md bg-secondary/50">
+                <pre className="whitespace-pre-wrap font-sans text-sm">{tailoredResume}</pre>
+              </div>
+            )}
+            {!loading && !tailoredResume && (
+              <div className="flex justify-center items-center h-64 text-muted-foreground text-center">
+                <p>Your tailored resume will be displayed here once you submit the form.</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </main>
   );
 };
 

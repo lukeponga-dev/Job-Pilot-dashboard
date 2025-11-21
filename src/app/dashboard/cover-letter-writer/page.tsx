@@ -56,92 +56,90 @@ const CoverLetterWriterPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40">
-      <main className="flex-1 p-4 sm:p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>Job &amp; You</CardTitle>
-              <CardDescription>Fill out the details to generate a custom cover letter.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-medium">Your Information</h3>
-                    <FormField name="fullName" control={form.control} render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Full Name</FormLabel>
-                        <FormControl><Input placeholder="John Doe" {...field} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )} />
-                    <FormField name="userExperience" control={form.control} render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Your Key Skills & Experience</FormLabel>
-                        <FormControl><Textarea placeholder="Describe your most relevant skills and experience for this role..." rows={5} {...field} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )} />
-                  </div>
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-medium">Job Details</h3>
-                    <FormField name="jobRole" control={form.control} render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Job Role</FormLabel>
-                        <FormControl><Input placeholder="e.g., Senior Product Manager" {...field} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )} />
-                    <FormField name="companyName" control={form.control} render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Company Name</FormLabel>
-                        <FormControl><Input placeholder="e.g., Acme Inc." {...field} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )} />
-                    <FormField name="jobDescription" control={form.control} render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Job Description</FormLabel>
-                        <FormControl><Textarea placeholder="Paste the job description here..." rows={8} {...field} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )} />
-                  </div>
-                  <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
-                    Generate Cover Letter
-                  </Button>
-                </form>
-              </Form>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Generated Cover Letter</CardTitle>
-              <CardDescription>Your AI-generated cover letter will appear here.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {loading && (
-                <div className="flex justify-center items-center h-64">
-                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
+    <main className="flex-1 p-4 sm:p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <Card>
+          <CardHeader>
+            <CardTitle className='font-headline'>Job &amp; You</CardTitle>
+            <CardDescription>Fill out the details to generate a custom cover letter.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium">Your Information</h3>
+                  <FormField name="fullName" control={form.control} render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Full Name</FormLabel>
+                      <FormControl><Input placeholder="John Doe" {...field} /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+                  <FormField name="userExperience" control={form.control} render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Your Key Skills & Experience</FormLabel>
+                      <FormControl><Textarea placeholder="Describe your most relevant skills and experience for this role..." rows={5} {...field} /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
                 </div>
-              )}
-              {generatedLetter && (
-                <div className="prose dark:prose-invert max-w-none p-4 border rounded-md bg-secondary/50">
-                  <pre className="whitespace-pre-wrap font-sans text-sm">{generatedLetter}</pre>
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium">Job Details</h3>
+                  <FormField name="jobRole" control={form.control} render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Job Role</FormLabel>
+                      <FormControl><Input placeholder="e.g., Senior Product Manager" {...field} /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+                  <FormField name="companyName" control={form.control} render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Company Name</FormLabel>
+                      <FormControl><Input placeholder="e.g., Acme Inc." {...field} /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+                  <FormField name="jobDescription" control={form.control} render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Job Description</FormLabel>
+                      <FormControl><Textarea placeholder="Paste the job description here..." rows={8} {...field} /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
                 </div>
-              )}
-              {!loading && !generatedLetter && (
-                <div className="flex justify-center items-center h-64 text-muted-foreground text-center">
-                  <p>Your generated letter will be displayed here once you fill out and submit the form.</p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-      </main>
-    </div>
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
+                  Generate Cover Letter
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className='font-headline'>Generated Cover Letter</CardTitle>
+            <CardDescription>Your AI-generated cover letter will appear here.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {loading && (
+              <div className="flex justify-center items-center h-64">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              </div>
+            )}
+            {generatedLetter && (
+              <div className="prose dark:prose-invert max-w-none p-4 border rounded-md bg-secondary/50">
+                <pre className="whitespace-pre-wrap font-sans text-sm">{generatedLetter}</pre>
+              </div>
+            )}
+            {!loading && !generatedLetter && (
+              <div className="flex justify-center items-center h-64 text-muted-foreground text-center">
+                <p>Your generated letter will be displayed here once you fill out and submit the form.</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </main>
   );
 };
 
