@@ -2,212 +2,212 @@ import type { JobApplication } from './types';
 
 export const seedApplications: Omit<JobApplication, 'id' | 'userId' | 'lastUpdated'>[] = [
     {
-      company: 'Mountain V',
-      role: 'Casual Re',
-      location: 'Taupo, Wa',
-      dateApplied: '2025-11-17',
-      status: 'Applied',
-      url: ''
+        company: 'Mountain Warehouse',
+        role: 'Casual Retail Sales Assistant',
+        location: 'Taupo, Waikato',
+        dateApplied: '2025-11-17',
+        status: 'Applied',
+        url: ''
     },
     {
-      company: 'Hamilton C',
-      role: 'Senior Ser',
-      location: 'Hamilton',
-      dateApplied: '2025-11-17',
-      status: 'Applied',
-      url: ''
+        company: 'Hamilton City Council',
+        role: 'Senior Service Desk Analyst',
+        location: 'Hamilton, Waikato',
+        dateApplied: '2025-11-17',
+        status: 'Applied',
+        url: ''
     },
     {
-      company: 'JD Sports',
-      role: 'Footwear',
-      location: 'Hamilton',
-      dateApplied: '2025-11-17',
-      status: 'Applied',
-      url: ''
+        company: 'JD Sports Australia & NZ',
+        role: 'Footwear Sales Assistant',
+        location: 'Hamilton, Waikato',
+        dateApplied: '2025-11-17',
+        status: 'Applied',
+        url: ''
     },
     {
-      company: 'The Just G',
-      role: 'Christmas',
-      location: 'The Base,',
-      dateApplied: '2025-11-16',
-      status: 'Applied',
-      url: ''
+        company: 'The Just Group (Jay Jays)',
+        role: 'Christmas Casual',
+        location: 'The Base, Waikato',
+        dateApplied: '2025-11-16',
+        status: 'Applied',
+        url: ''
     },
     {
-      company: 'Bhogal Lim',
-      role: 'Courier Dr',
-      location: 'Te Rapa,',
-      dateApplied: '2025-11-16',
-      status: 'Applied',
-      url: ''
+        company: 'Bhogal Limited',
+        role: 'Courier Driver',
+        location: 'Te Rapa, Waikato',
+        dateApplied: '2025-11-16',
+        status: 'Applied',
+        url: ''
     },
     {
-      company: 'Datacom',
-      role: 'Application',
-      location: 'Hamilton',
-      dateApplied: '2025-11-14',
-      status: 'Applied',
-      url: ''
+        company: 'Datacom',
+        role: 'Application Support Analyst',
+        location: 'Hamilton, Waikato',
+        dateApplied: '2025-11-14',
+        status: 'Applied',
+        url: ''
     },
     {
-      company: 'Red Path I',
-      role: 'Christmas',
-      location: 'Hamilton',
-      dateApplied: '2025-11-14',
-      status: 'Applied',
-      url: ''
+        company: 'Red Path N Tables',
+        role: 'Christmas Helpers',
+        location: 'Hamilton, Waikato',
+        dateApplied: '2025-11-14',
+        status: 'Applied',
+        url: ''
     },
     {
-      company: 'DEAR Mot',
-      role: 'General Fit',
-      location: 'Hamilton',
-      dateApplied: '2025-10-30',
-      status: 'Viewed',
-      url: ''
+        company: 'DEAR Motors',
+        role: 'General Fitter',
+        location: 'Hamilton, Waikato',
+        dateApplied: '2025-10-30',
+        status: 'Viewed',
+        url: ''
     },
     {
-      company: 'The Wareh',
-      role: 'Casual Te',
-      location: 'Te Rapa, H',
-      dateApplied: '2025-10-28',
-      status: 'Applied',
-      url: ''
+        company: 'The Warehouse',
+        role: 'Casual Team Member (Nightfill)',
+        location: 'Te Rapa, Hamilton',
+        dateApplied: '2025-10-28',
+        status: 'Applied',
+        url: ''
     },
     {
-      company: 'Computer',
-      role: 'Customer',
-      location: 'Wellington',
-      dateApplied: '2025-10-25',
-      status: 'Not selected',
-      url: ''
+        company: 'Computer Concepts',
+        role: 'Customer Experience Agent (Overnight)',
+        location: 'Wellington City, Wellington',
+        dateApplied: '2025-10-25',
+        status: 'Not selected',
+        url: ''
     },
     {
-      company: 'Computer',
-      role: 'Service De',
-      location: 'Wellington',
-      dateApplied: '2025-10-25',
-      status: 'Not selected',
-      url: ''
+        company: 'Computer Concepts',
+        role: 'Service Desk Analyst (Evening shifts)',
+        location: 'Wellington City, Wellington',
+        dateApplied: '2025-10-25',
+        status: 'Not selected',
+        url: ''
     },
     {
-      company: 'Tech Dom',
-      role: 'IT Network',
-      location: 'Wellington',
-      dateApplied: '2025-10-03',
-      status: 'Not selected',
-      url: ''
+        company: 'Tech Domain',
+        role: 'IT Network Engineer',
+        location: 'Wellington City, Wellington',
+        dateApplied: '2025-10-03',
+        status: 'Not selected',
+        url: ''
     },
     {
-      company: 'Warehous',
-      role: 'Technolog',
-      location: 'Te Rapa, H',
-      dateApplied: '2025-10-03',
-      status: 'Interviewing',
-      url: ''
+        company: 'Warehouse Stationery',
+        role: 'Technology Team Member (Part-Time)',
+        location: 'Te Rapa, Hamilton',
+        dateApplied: '2025-10-03',
+        status: 'Interviewing',
+        url: ''
     },
     {
-      company: 'Computer',
-      role: 'IT Support',
-      location: 'Masterton',
-      dateApplied: '2025-10-20',
-      status: 'Not selected',
-      url: ''
+        company: 'Computer Partners',
+        role: 'IT Support Specialist',
+        location: 'Masterton 5810',
+        dateApplied: '2025-10-20',
+        status: 'Not selected',
+        url: ''
     },
     {
-      company: 'Instant Wir',
-      role: 'Autoglass',
-      location: 'Hamilton',
-      dateApplied: '2025-09-19',
-      status: 'Interviewing',
-      url: ''
+        company: 'Instant Windscreens & Tinting',
+        role: 'Autoglass Fitter Trainee',
+        location: 'Hamilton, Waikato',
+        dateApplied: '2025-09-19',
+        status: 'Interviewing',
+        url: ''
     },
     {
-      company: 'Hill Labs',
-      role: 'IT Support',
-      location: 'Hamilton L',
-      dateApplied: '2025-10-26',
-      status: 'Expired',
-      url: ''
+        company: 'Hill Labs',
+        role: 'IT Support Engineer',
+        location: 'Hamilton Lake, Waikato',
+        dateApplied: '2025-10-26',
+        status: 'Expired',
+        url: ''
     },
     {
-      company: 'Cloud Torc',
-      role: 'Support Er',
-      location: 'Hamilton C',
-      dateApplied: '2025-11-01',
-      status: 'Unlikely to progress',
-      url: ''
+        company: 'Cloud Torque Global Ltd',
+        role: 'Support Engineer',
+        location: 'Hamilton Central, Waikato',
+        dateApplied: '2025-11-01',
+        status: 'Unlikely to progress',
+        url: ''
     },
     {
-      company: 'Hampshire',
-      role: 'IT Operatic',
-      location: 'Wellington',
-      dateApplied: '2025-10-25',
-      status: 'Expired',
-      url: ''
+        company: 'Hampshire (NZ) Limited',
+        role: 'IT Operations Support Lead',
+        location: 'Wellington Central, Wellington',
+        dateApplied: '2025-10-25',
+        status: 'Expired',
+        url: ''
     },
     {
-      company: 'Aiscorp Lir',
-      role: 'Level 1 He',
-      location: 'Johnsonvil',
-      dateApplied: '2025-11-13',
-      status: 'Expired',
-      url: ''
+        company: 'Aiscorp Limited',
+        role: 'Level 1 Helpdesk Technician',
+        location: 'Johnsonville, Wellington',
+        dateApplied: '2025-11-13',
+        status: 'Expired',
+        url: ''
     },
     {
-      company: 'University',
-      role: 'Student Sy',
-      location: 'Hamilton E',
-      dateApplied: '2025-10-20',
-      status: 'Expired',
-      url: ''
+        company: 'University of Waikato',
+        role: 'Student Systems Analyst',
+        location: 'Hamilton East, Waikato',
+        dateApplied: '2025-10-20',
+        status: 'Expired',
+        url: ''
     },
     {
-      company: 'Montana G',
-      role: 'Packing &',
-      location: 'Te Rapa,',
-      dateApplied: '2025-10-25',
-      status: 'Unlikely to progress',
-      url: ''
+        company: 'Montana Group',
+        role: 'Packing & Production Team Member',
+        location: 'Te Rapa, Waikato',
+        dateApplied: '2025-10-25',
+        status: 'Unlikely to progress',
+        url: ''
     },
     {
-      company: 'The Instille',
-      role: 'Support Ar',
-      location: 'Hamilton C',
-      dateApplied: '2025-10-12',
-      status: 'Expired',
-      url: ''
+        company: 'The Instillery',
+        role: 'Support Analyst',
+        location: 'Hamilton Central, Waikato',
+        dateApplied: '2025-10-12',
+        status: 'Expired',
+        url: ''
     },
     {
-      company: 'Repco Nev',
-      role: 'Part Time',
-      location: 'Hamilton,',
-      dateApplied: '2025-10-10',
-      status: 'Expired',
-      url: ''
+        company: 'Repco New Zealand',
+        role: 'Part Time Retail Assistant',
+        location: 'Hamilton, Waikato',
+        dateApplied: '2025-10-10',
+        status: 'Expired',
+        url: ''
     },
     {
-      company: 'PODcom I',
-      role: 'Helpdesk',
-      location: 'Hamilton C',
-      dateApplied: '2025-10-05',
-      status: 'Unlikely to progress',
-      url: ''
+        company: 'PODcom Limited',
+        role: 'Helpdesk Support Engineer',
+        location: 'Hamilton Central, Waikato',
+        dateApplied: '2025-10-05',
+        status: 'Unlikely to progress',
+        url: ''
     },
     {
-      company: 'Harvey No',
-      role: 'Technolog',
-      location: 'Hamilton C',
-      dateApplied: '2025-10-02',
-      status: 'Expired',
-      url: ''
+        company: 'Harvey Norman',
+        role: 'Technology Sales Consultant',
+        location: 'Hamilton Central, Waikato',
+        dateApplied: '2025-10-02',
+        status: 'Expired',
+        url: ''
     },
     {
-      company: 'Hamilton H',
-      role: 'Front of Ho',
-      location: 'Hamilton C',
-      dateApplied: '2025-10-02',
-      status: 'Expired',
-      url: ''
+        company: 'Hamilton Hotel',
+        role: 'Front of House',
+        location: 'Hamilton Central, Waikato',
+        dateApplied: '2025-10-02',
+        status: 'Expired',
+        url: ''
     }
   ];
   
