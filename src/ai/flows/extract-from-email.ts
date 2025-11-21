@@ -9,10 +9,8 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
+import { ExtractApplicationInputSchema } from './schemas';
 
-const ExtractApplicationInputSchema = z.object({
-  emailContent: z.string().min(1, 'Email content is required.'),
-});
 export type ExtractApplicationInput = z.infer<typeof ExtractApplicationInputSchema>;
 
 const ExtractApplicationOutputSchema = z.object({

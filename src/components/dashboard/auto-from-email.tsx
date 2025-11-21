@@ -24,10 +24,8 @@ import {
 } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import {
-  extractApplicationFromEmail,
-  ExtractApplicationInputSchema,
-} from '@/ai/flows/extract-from-email';
+import { extractApplicationFromEmail } from '@/ai/flows/extract-from-email';
+import { ExtractApplicationInputSchema } from '@/ai/flows/schemas';
 import type { ExtractApplicationInput } from '@/ai/flows/extract-from-email';
 import type { PartialJobApplication } from '@/lib/types';
 
