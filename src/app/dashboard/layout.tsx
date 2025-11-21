@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import AuthGuard from '@/components/auth-guard';
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from '@/components/ui/sidebar';
 import Link from 'next/link';
@@ -9,6 +10,7 @@ import { useUser } from '@/firebase';
 
 function DashboardSidebar() {
     const { user } = useUser();
+    const pathname = usePathname();
     return (
         <Sidebar>
             <SidebarHeader>
@@ -20,7 +22,7 @@ function DashboardSidebar() {
             <SidebarContent>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <SidebarMenuButton asChild>
+                        <SidebarMenuButton asChild isActive={pathname === '/dashboard'}>
                             <Link href="/dashboard">
                                 <Home />
                                 <span>Dashboard</span>
@@ -28,7 +30,7 @@ function DashboardSidebar() {
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
-                        <SidebarMenuButton asChild>
+                        <SidebarMenuButton asChild isActive={pathname === '/dashboard/resume-tailor'}>
                             <Link href="/dashboard/resume-tailor">
                                 <ScanText />
                                 <span>Resume Tailor</span>
@@ -36,7 +38,7 @@ function DashboardSidebar() {
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
-                        <SidebarMenuButton asChild>
+                        <SidebarMenuButton asChild isActive={pathname === '/dashboard/cv-writer'}>
                             <Link href="/dashboard/cv-writer">
                                 <FileText />
                                 <span>CV Writer</span>
@@ -44,7 +46,7 @@ function DashboardSidebar() {
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
-                        <SidebarMenuButton asChild>
+                        <SidebarMenuButton asChild isActive={pathname === '/dashboard/cover-letter-writer'}>
                             <Link href="/dashboard/cover-letter-writer">
                                 <StickyNote />
                                 <span>Cover Letter Writer</span>

@@ -68,14 +68,8 @@ const CvWriterPage = () => {
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
-        <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:px-6">
-            <Link href="/dashboard" className="text-lg font-semibold font-headline flex items-center gap-2">
-                <Wand2 className="h-5 w-5 text-primary" />
-                AI CV Writer
-            </Link>
-        </header>
       <main className="flex-1 p-4 sm:p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <Card>
             <CardHeader>
               <CardTitle>Your Details</CardTitle>

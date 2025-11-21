@@ -120,17 +120,17 @@ const Sidebar = React.forwardRef<
     }
   
     return (
-      <div
+      <aside
         ref={ref}
         data-collapsed={isCollapsed}
-        className={cn("hidden md:flex flex-col h-screen border-r bg-background transition-[width] duration-300", 
+        className={cn("hidden sm:flex flex-col h-full border-r bg-background transition-all duration-300 fixed", 
             isCollapsed ? "w-[--sidebar-width-collapsed]" : "w-[--sidebar-width]",
             className
         )}
         {...props}
       >
         {children}
-      </div>
+      </aside>
     );
   });
 Sidebar.displayName = 'Sidebar';
@@ -167,7 +167,7 @@ const SidebarHeader = React.forwardRef<
         ref={ref}
         data-collapsed={isCollapsed}
         className={cn(
-            'flex items-center p-3 transition-all duration-300',
+            'flex h-14 items-center border-b p-3 transition-all duration-300',
             isCollapsed ? 'justify-center' : 'justify-between',
             className
         )}
@@ -227,7 +227,7 @@ const SidebarMenuItem = React.forwardRef<
 SidebarMenuItem.displayName = 'SidebarMenuItem';
 
 const sidebarMenuButtonVariants = cva(
-    "flex w-full items-center gap-3 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-primary-focus transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 data-[active=true]:bg-accent data-[active=true]:font-medium data-[active=true]:text-accent-foreground",
+    "flex w-full items-center gap-3 overflow-hidden rounded-md p-2 text-left text-sm font-normal outline-none ring-primary-focus transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 data-[active=true]:bg-accent data-[active=true]:font-medium data-[active=true]:text-accent-foreground",
     {
       variants: {
         isCollapsed: {
@@ -243,11 +243,28 @@ const sidebarMenuButtonVariants = cva(
   React.ComponentProps<'button'> & {
     asChild?: boolean;
     isActive?: boolean;
-    tooltip?: string;
   }
->(({ asChild = false, isActive = false, tooltip, className, children, ...props }, ref) => {
-  const { isCollapsed, isMobile } = useSidebar();
+>(({ asChild = false, isActive = false, className, children, ...props }, ref) => {
+  const { isCollapsed } = useSidebar();
   const Comp = asChild ? Slot : 'button';
+
+  const buttonContent = (
+    <>
+      {React.Children.map(children, (child, index) => {
+        // First child (icon)
+        if (index === 0 && React.isValidElement(child)) {
+          return React.cloneElement(child as React.ReactElement<any>, {
+            className: cn('h-5 w-5 shrink-0', (child.props as any).className),
+          });
+        }
+        // Second child (text)
+        if (index === 1 && React.isValidElement(child)) {
+          return <span className={cn('truncate', isCollapsed ? 'invisible' : 'visible')}>{child}</span>;
+        }
+        return child;
+      })}
+    </>
+  );
 
   const button = (
     <Comp
@@ -260,12 +277,19 @@ const sidebarMenuButtonVariants = cva(
     </Comp>
   );
 
-  if (isCollapsed && !isMobile && tooltip) {
+  if (isCollapsed) {
+    const tooltipText = React.Children.toArray(children).find(
+      (child) => typeof child === 'string' || (React.isValidElement(child) && child.type === 'span')
+    );
+    const tooltipContent = typeof tooltipText === 'string' 
+      ? tooltipText 
+      : (React.isValidElement(tooltipText) && typeof tooltipText.props.children === 'string' ? tooltipText.props.children : 'Menu Item');
+
     return (
       <Tooltip>
         <TooltipTrigger asChild>{button}</TooltipTrigger>
         <TooltipContent side="right" align="center">
-          {tooltip}
+          {tooltipContent}
         </TooltipContent>
       </Tooltip>
     );
